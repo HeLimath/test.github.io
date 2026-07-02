@@ -2,12 +2,9 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <!-- user-scalable=no와 maximum-scale 설정을 제거하여 휴대폰의 글씨 크기 설정 및 사용자 화면 확대가 자유롭게 작동하도록 개선합니다. -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>2026학년도 교사 연찬회</title>
     
-    <!-- 모바일 홈 화면 추가 시 나타날 아이콘 설정 -->
-    <!-- 깃허브에 이 html 파일과 같은 위치에 'icon.png' 파일을 꼭 함께 올려주세요! -->
     <link rel="apple-touch-icon" sizes="180x180" href="./icon.png">
     <link rel="icon" type="image/png" sizes="192x192" href="./icon.png">
     <link rel="shortcut icon" href="./icon.png">
@@ -15,57 +12,41 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    // 고정된 px 단위를 사용자 기기 설정(rem)에 맞춰 유동적으로 변환하도록 매핑
-                    fontSize: {
-                        '9px': '0.5625rem',
-                        '10px': '0.625rem',
-                        '11px': '0.6875rem',
-                        '12px': '0.75rem',
-                        '13px': '0.8125rem',
-                        '14px': '0.875rem',
-                        '15px': '0.9375rem',
-                        '16px': '1rem'
-                    },
                     fontFamily: {
                         sans: ['Noto Sans KR', 'sans-serif'],
                     },
                     colors: {
                         seoul: {
-                            red: '#E25540',     // 테라코타 레드
-                            green: '#2A5C41',   // 남산 딥그린
-                            beige: '#F8F6F0',   // 크림 베이지 배경
-                            charcoal: '#2D2D2D',// 다크 차콜
-                            line: '#EAE5DF'     // 부드러운 테두리
+                            red: '#E25540',
+                            green: '#2A5C41',
+                            beige: '#F8F6F0',
+                            charcoal: '#2D2D2D',
+                            line: '#EAE5DF'
                         }
                     }
                 }
             }
         }
     </script>
-    
 
     <style>
-        /* 모바일 기본 설정 및 부드러운 스크롤 */
         html, body { 
             background-color: #F8F6F0; 
             color: #2D2D2D; 
             -webkit-tap-highlight-color: transparent;
             -webkit-overflow-scrolling: touch;
             scroll-behavior: smooth;
-            /* 휴대폰 시스템의 텍스트 크기 설정을 브라우저가 자동 반영하도록 허용합니다. */
-            -webkit-text-size-adjust: 100%;
-            -ms-text-size-adjust: 100%;
         }
         
         .page-view { display: none; animation: fadeIn 0.3s ease-in-out; }
         .page-view.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
         
-        /* 글씨가 커질 수 있으므로 고정높이(max-height) 여유 폭을 확보합니다. */
         .accordion-content { max-height: 0; overflow: hidden; transition: all 0.3s ease-out; opacity: 0; }
         .accordion-content.active { max-height: 2000px; opacity: 1; padding-top: 0.5rem; padding-bottom: 1rem; }
         .icon-rotate { transition: transform 0.3s ease; }
@@ -74,7 +55,6 @@
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         
-        /* 사진 모달 */
         #photo-modal {
             display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%;
             background-color: rgba(20, 20, 20, 0.95); justify-content: center; align-items: center; flex-direction: column;
@@ -84,7 +64,7 @@
         #photo-modal img { max-width: 95%; max-height: 80vh; border-radius: 0.75rem; box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
     </style>
 </head>
-<body class="antialiased pb-20"> <!-- pb-20: 하단 고정 바 공간 -->
+<body class="antialiased pb-20">
 
     <div class="content-area">
         
@@ -92,7 +72,6 @@
         <!-- 1. 홈 화면 -->
         <!-- ========================================== -->
         <section id="view-home" class="page-view active">
-            <!-- 감성적이면서도 깔끔한 헤더 -->
             <div class="bg-seoul-red text-white p-8 pt-12 shadow-md rounded-b-[2rem] mb-6 relative overflow-hidden">
                 <div class="absolute -top-10 -right-10 w-40 h-40 bg-white opacity-10 rounded-full blur-2xl"></div>
                 <div class="absolute -bottom-5 -left-5 w-24 h-24 bg-white opacity-10 rounded-full blur-xl"></div>
@@ -107,18 +86,17 @@
             </div>
             
            <div class="px-5 mt-6 max-w-md mx-auto space-y-3 pb-4">
-                <!-- 스페셜 이벤트 카드 (색상 및 디자인 수정) -->
                 <div class="bg-white rounded-3xl p-5 shadow-sm mb-6 border border-blue-100 relative overflow-hidden">
                     <div class="absolute -right-4 -top-4 w-16 h-16 bg-blue-50 rounded-full blur-xl"></div>
                     <div class="relative z-10">
                         <div class="flex items-center justify-between mb-3">
-                            <h3 class="font-black text-[16px] text-blue-600 tracking-tight flex items-center">
+                            <h3 class="font-black text-base text-blue-600 tracking-tight flex items-center">
                                 <i class="fa-solid fa-camera-retro mr-2"></i>[단톡방 이벤트] 찰칵! 📸
                             </h3>
-                            <span class="text-[10px] font-bold bg-blue-50 text-blue-600 px-2.5 py-1 rounded-full border border-blue-100 animate-pulse"><i class="fa-solid fa-gift mr-1"></i>기프티콘 팡팡!</span>
+                            <span class="text-[0.625rem] font-bold bg-blue-50 text-blue-600 px-2.5 py-1 rounded-full border border-blue-100 animate-pulse"><i class="fa-solid fa-gift mr-1"></i>기프티콘 팡팡!</span>
                         </div>
                         
-                        <div class="space-y-2.5 text-[12px] text-gray-700">
+                        <div class="space-y-2.5 text-xs text-gray-700">
                             <div class="bg-gray-50 p-3 rounded-xl border border-gray-100">
                                 <p class="font-bold text-seoul-charcoal mb-1 flex items-center"><i class="fa-solid fa-check text-blue-500 mr-1.5 w-3 text-center"></i>참여 방법</p>
                                 <p class="text-gray-600 leading-relaxed ml-4">서울 내 어디서든 <strong>AI·디지털 관련 사물/장소</strong>에서 본인 얼굴이 작게라도 나오게 인증샷 촬영 후 친목회 단톡방에 업로드!</p>
@@ -137,7 +115,6 @@
                     </div>
                 </div>
  
-            <!-- 직관적인 메인 메뉴 버튼 -->
             <div class="px-5 mt-6 max-w-md mx-auto space-y-3 pb-4">
                 <p class="text-gray-500 text-sm font-bold ml-2 mb-2">원하시는 메뉴를 선택하세요</p>
                 
@@ -146,7 +123,7 @@
                         <div class="w-12 h-12 rounded-full bg-[#F0F7F3] text-seoul-green flex items-center justify-center text-xl mr-4"><i class="fa-solid fa-circle-info"></i></div>
                         <div class="text-left">
                             <h3 class="text-base font-bold text-seoul-charcoal">상세 안내</h3>
-                            <p class="text-[11px] text-gray-500 mt-0.5">집결/출발 시간, 비상 연락망 등</p>
+                            <p class="text-[0.6875rem] text-gray-500 mt-0.5">집결/출발 시간, 비상 연락망 등</p>
                         </div>
                     </div>
                     <i class="fa-solid fa-chevron-right text-gray-300"></i>
@@ -157,19 +134,18 @@
                         <div class="w-12 h-12 rounded-full bg-[#FFF5F3] text-seoul-red flex items-center justify-center text-xl mr-4"><i class="fa-regular fa-calendar-check"></i></div>
                         <div class="text-left">
                             <h3 class="text-base font-bold text-seoul-charcoal">일정 보기</h3>
-                            <p class="text-[11px] text-gray-500 mt-0.5">1일차/2일차 세부 프로그램 안내</p>
+                            <p class="text-[0.6875rem] text-gray-500 mt-0.5">1일차/2일차 세부 프로그램 안내</p>
                         </div>
                     </div>
                     <i class="fa-solid fa-chevron-right text-gray-300"></i>
                 </button>
 
-                <!-- 그룹 안내 메뉴 버튼 -->
                 <button onclick="switchTab('group')" class="w-full bg-white p-4 rounded-2xl shadow-sm border border-seoul-line flex items-center justify-between active:scale-[0.98] transition-transform">
                     <div class="flex items-center">
                         <div class="w-12 h-12 rounded-full bg-orange-50 text-orange-500 flex items-center justify-center text-xl mr-4"><i class="fa-solid fa-users"></i></div>
                         <div class="text-left">
                             <h3 class="text-base font-bold text-seoul-charcoal">그룹 활동</h3>
-                            <p class="text-[11px] text-gray-500 mt-0.5">자유 활동 그룹 안내</p>
+                            <p class="text-[0.6875rem] text-gray-500 mt-0.5">자유 활동 그룹 안내</p>
                         </div>
                     </div>
                     <i class="fa-solid fa-chevron-right text-gray-300"></i>
@@ -180,7 +156,7 @@
                         <div class="w-12 h-12 rounded-full bg-gray-100 text-seoul-charcoal flex items-center justify-center text-xl mr-4"><i class="fa-solid fa-bed"></i></div>
                         <div class="text-left">
                             <h3 class="text-base font-bold text-seoul-charcoal">숙소 안내</h3>
-                            <p class="text-[11px] text-gray-500 mt-0.5">호텔 기본 정보 및 객실 배정표</p>
+                            <p class="text-[0.6875rem] text-gray-500 mt-0.5">호텔 기본 정보 및 객실 배정표</p>
                         </div>
                     </div>
                     <i class="fa-solid fa-chevron-right text-gray-300"></i>
@@ -206,14 +182,13 @@
                         Day 1 - 7. 3.(금)
                     </h3>
 
-                    <!-- 일정 1 -->
                     <div class="relative pl-12 mb-4">
                         <div class="absolute left-3.5 top-5 w-2.5 h-2.5 rounded-full bg-seoul-red -translate-x-1/2 shadow-[0_0_0_4px_#F8F6F0]"></div>
                         <button class="accordion-btn w-full text-left bg-white p-4 rounded-xl shadow-sm border border-seoul-line active:scale-[0.99] transition-transform" onclick="toggleAccordion(this)">
                             <div class="flex justify-between items-start">
                                 <div>
-                                    <span class="text-[11px] font-bold text-seoul-red block mb-1 tracking-wide">13:00 - 16:00</span>
-                                    <h4 class="text-[15px] font-bold text-seoul-charcoal">학교 ➡️ 서울 이동, 숙소 체크인</h4>
+                                    <span class="text-[0.6875rem] font-bold text-seoul-red block mb-1 tracking-wide">13:00 - 16:00</span>
+                                    <h4 class="text-[0.9375rem] font-bold text-seoul-charcoal">학교 ➡️ 서울 이동, 숙소 체크인</h4>
                                 </div>
                                 <i class="fa-solid fa-chevron-down text-gray-300 mt-1 icon-rotate"></i>
                             </div>
@@ -227,14 +202,13 @@
                         </div>
                     </div>
 
-                    <!-- 일정 2 -->
                     <div class="relative pl-12 mb-4">
                         <div class="absolute left-3.5 top-5 w-2.5 h-2.5 rounded-full bg-seoul-red -translate-x-1/2 shadow-[0_0_0_4px_#F8F6F0]"></div>
                         <button class="accordion-btn w-full text-left bg-white p-4 rounded-xl shadow-sm border border-seoul-line active:scale-[0.99] transition-transform" onclick="toggleAccordion(this)">
                             <div class="flex justify-between items-start">
                                 <div>
-                                    <span class="text-[11px] font-bold text-seoul-red block mb-1 tracking-wide">16:30 - 18:10</span>
-                                    <h4 class="text-[15px] font-bold text-seoul-charcoal">연극 [라이어] 관람</h4>
+                                    <span class="text-[0.6875rem] font-bold text-seoul-red block mb-1 tracking-wide">16:30 - 18:10</span>
+                                    <h4 class="text-[0.9375rem] font-bold text-seoul-charcoal">연극 [라이어] 관람</h4>
                                 </div>
                                 <i class="fa-solid fa-chevron-down text-gray-300 mt-1 icon-rotate"></i>
                             </div>
@@ -246,8 +220,8 @@
                                 <p><i class="fa-solid fa-ticket text-seoul-green w-5 text-center"></i> <strong>좌석:</strong> 법동중학교 앞자리 우선 배정</p>
 
                                 <div class="mt-3 bg-gray-50 p-3 rounded-lg border border-gray-100 shadow-sm">
-                                    <p class="text-[11px] font-bold text-gray-700 mb-2 flex items-center">
-                                        <i class="fa-regular fa-images mr-1 text-gray-400"></i> 관련 정보 <span class="text-[9px] font-normal text-gray-400 ml-1">(사진을 누르면 확대)</span>
+                                    <p class="text-[0.6875rem] font-bold text-gray-700 mb-2 flex items-center">
+                                        <i class="fa-regular fa-images mr-1 text-gray-400"></i> 관련 정보 <span class="text-[0.5625rem] font-normal text-gray-400 ml-1">(사진을 누르면 확대)</span>
                                     </p>
                                     
                                     <div class="relative">
@@ -277,14 +251,13 @@
                         </div>
                     </div>
 
-                    <!-- 일정 3 -->
                     <div class="relative pl-12 mb-4">
                         <div class="absolute left-3.5 top-5 w-2.5 h-2.5 rounded-full bg-seoul-red -translate-x-1/2 shadow-[0_0_0_4px_#F8F6F0]"></div>
                         <button class="accordion-btn w-full text-left bg-white p-4 rounded-xl shadow-sm border border-seoul-line active:scale-[0.99] transition-transform" onclick="toggleAccordion(this)">
                             <div class="flex justify-between items-start">
                                 <div>
-                                    <span class="text-[11px] font-bold text-seoul-red block mb-1 tracking-wide">19:00 - 20:30</span>
-                                    <h4 class="text-[15px] font-bold text-seoul-charcoal">저녁 식사: [남포 면옥]</h4>
+                                    <span class="text-[0.6875rem] font-bold text-seoul-red block mb-1 tracking-wide">19:00 - 20:30</span>
+                                    <h4 class="text-[0.9375rem] font-bold text-seoul-charcoal">저녁 식사: [남포 면옥]</h4>
                                 </div>
                                 <i class="fa-solid fa-chevron-down text-gray-300 mt-1 icon-rotate"></i>
                             </div>
@@ -321,14 +294,13 @@
                         </div>
                     </div>
 
-                    <!-- 일정 4 (수정됨: 자유시간 삭제 -> 미디어아트 탐방) -->
                     <div class="relative pl-12 mb-4">
                         <div class="absolute left-3.5 top-5 w-2.5 h-2.5 rounded-full bg-seoul-red -translate-x-1/2 shadow-[0_0_0_4px_#F8F6F0]"></div>
                         <button class="accordion-btn w-full text-left bg-white p-4 rounded-xl shadow-sm border border-seoul-line active:scale-[0.99] transition-transform" onclick="toggleAccordion(this)">
                             <div class="flex justify-between items-start">
                                 <div class="w-11/12">
-                                    <span class="text-[11px] font-bold text-seoul-red block mb-1 tracking-wide">21:00 - 21:30</span>
-                                    <h4 class="text-[15px] font-bold text-seoul-charcoal leading-snug">청계천-DDP 미디어파사드<br>및 미디어아트 탐방 🌟</h4>
+                                    <span class="text-[0.6875rem] font-bold text-seoul-red block mb-1 tracking-wide">21:00 - 21:30</span>
+                                    <h4 class="text-[0.9375rem] font-bold text-seoul-charcoal leading-snug">청계천-DDP 미디어파사드<br>및 미디어아트 탐방 🌟</h4>
                                 </div>
                                 <i class="fa-solid fa-chevron-down text-gray-300 mt-1 icon-rotate w-1/12 text-right"></i>
                             </div>
@@ -345,7 +317,7 @@
                                 </p>
                                 
                                 <div class="bg-blue-50 p-3 rounded-lg border border-blue-100 shadow-sm mt-3">
-                                    <p class="font-bold text-blue-800 mb-1.5 text-[13px] flex items-center">
+                                    <p class="font-bold text-blue-800 mb-1.5 text-[0.8125rem] flex items-center">
                                         <i class="fa-solid fa-map-location-dot mr-1.5 text-blue-600"></i>추천 코스 안내
                                     </p>
                                     <div class="text-gray-700 text-xs leading-relaxed ml-1">
@@ -366,14 +338,13 @@
                         Day 2 - 7. 4.(토)
                     </h3>
 
-                    <!-- 2일차 일정 1 -->
                     <div class="relative pl-12 mb-4">
                         <div class="absolute left-3.5 top-5 w-2.5 h-2.5 rounded-full bg-seoul-green -translate-x-1/2 shadow-[0_0_0_4px_#F8F6F0]"></div>
                         <button class="accordion-btn w-full text-left bg-white p-4 rounded-xl shadow-sm border border-seoul-line active:scale-[0.99] transition-transform" onclick="toggleAccordion(this)">
                             <div class="flex justify-between items-start">
                                 <div>
-                                    <span class="text-[11px] font-bold text-seoul-green block mb-1 tracking-wide">07:00 - 09:00</span>
-                                    <h4 class="text-[15px] font-bold text-seoul-charcoal">아침 식사</h4>
+                                    <span class="text-[0.6875rem] font-bold text-seoul-green block mb-1 tracking-wide">07:00 - 09:00</span>
+                                    <h4 class="text-[0.9375rem] font-bold text-seoul-charcoal">아침 식사</h4>
                                 </div>
                                 <i class="fa-solid fa-chevron-down text-gray-300 mt-1 icon-rotate"></i>
                             </div>
@@ -392,14 +363,13 @@
                         </div>
                     </div>
 
-                    <!-- 2일차 일정 2 (수정됨) -->
                     <div class="relative pl-12 mb-4">
                         <div class="absolute left-3.5 top-5 w-2.5 h-2.5 rounded-full bg-seoul-green -translate-x-1/2 shadow-[0_0_0_4px_#F8F6F0]"></div>
                         <button class="accordion-btn w-full text-left bg-white p-4 rounded-xl shadow-sm border border-seoul-line active:scale-[0.99] transition-transform" onclick="toggleAccordion(this)">
                             <div class="flex justify-between items-start">
                                 <div>
-                                    <span class="text-[11px] font-bold text-seoul-green block mb-1 tracking-wide">09:00 - 13:00</span>
-                                    <h4 class="text-[15px] font-bold text-seoul-charcoal">오전 선택 코스 (자유 탐방)</h4>
+                                    <span class="text-[0.6875rem] font-bold text-seoul-green block mb-1 tracking-wide">09:00 - 13:00</span>
+                                    <h4 class="text-[0.9375rem] font-bold text-seoul-charcoal">오전 선택 코스 (자유 탐방)</h4>
                                 </div>
                                 <i class="fa-solid fa-chevron-down text-gray-300 mt-1 icon-rotate"></i>
                             </div>
@@ -407,39 +377,35 @@
                         <div class="accordion-content bg-white rounded-b-xl border-x border-b border-seoul-line -mt-2 pt-2 px-4">
                             <div class="py-4 border-t border-seoul-line mt-2 text-sm text-gray-600 space-y-3">
                                 
-                                <!-- 공지사항 (버스 취소) -->
                                 <div class="bg-[#FFF5F3] p-3 rounded-lg border border-orange-100 shadow-sm text-xs leading-relaxed">
                                     <p class="font-bold text-seoul-red mb-1.5 flex items-center"><i class="fa-solid fa-triangle-exclamation mr-1.5"></i>무더위로 인한 버스 취소 안내</p>
                                     <p class="text-seoul-charcoal">당일 무더위 예보로 경복궁 야외 관람 희망자가 적어 <strong>기존 경복궁행 버스 지원은 취소</strong>되었습니다. 대신 시원한 실내 중심의 특별한 AI·디지털 관련 코스들을 추천해 드립니다.</p>
                                 </div>
 
-                                <!-- A팀 -->
                                 <div class="bg-white p-3.5 rounded-xl border border-gray-200 shadow-sm mt-3">
-                                    <h5 class="font-bold text-[14px] text-blue-600 mb-2.5 flex items-center"><i class="fa-solid fa-robot mr-1.5"></i>로봇 인공지능 과학관 투어</h5>
+                                    <h5 class="font-bold text-sm text-blue-600 mb-2.5 flex items-center"><i class="fa-solid fa-robot mr-1.5"></i>로봇 인공지능 과학관 투어</h5>
                                     <div class="text-xs text-gray-700 space-y-2 ml-1">
                                         <p class="flex items-center"><i class="fa-solid fa-flag text-blue-500 w-4 text-center mr-1"></i><strong>리더:</strong> 신보라 선생님</p>
-                                        <p class="flex items-start"><i class="fa-solid fa-bus text-blue-500 w-4 text-center mr-1 mt-0.5"></i><span class="leading-relaxed"><strong>이동 안내:</strong> 09:00 호텔 앞에서 버스 탑승 및 출발<br><span class="inline-block mt-1 bg-blue-50 text-blue-700 px-1.5 py-0.5 rounded border border-blue-100 font-bold text-[11px]"><i class="fa-solid fa-taxi mr-1"></i>복귀 시 택시비 전액 지원</span></span></p>
+                                        <p class="flex items-start"><i class="fa-solid fa-bus text-blue-500 w-4 text-center mr-1 mt-0.5"></i><span class="leading-relaxed"><strong>이동 안내:</strong> 09:00 호텔 앞에서 버스 탑승 및 출발<br><span class="inline-block mt-1 bg-blue-50 text-blue-700 px-1.5 py-0.5 rounded border border-blue-100 font-bold text-[0.6875rem]"><i class="fa-solid fa-taxi mr-1"></i>복귀 시 택시비 전액 지원</span></span></p>
                                         <div class="bg-gray-50 p-2.5 rounded-lg border border-gray-100 relative overflow-hidden mt-1">
                                             <div class="absolute -right-2 -bottom-2 text-blue-100 opacity-50"><i class="fa-solid fa-gift text-4xl"></i></div>
                                             <p class="font-bold text-blue-800 mb-1.5 relative z-10">🎁 선착순 8명 스페셜 예약 혜택</p>
                                             <p class="text-gray-600 relative z-10 leading-snug">- 전문 도슨트 투어 (5명)<br>- 기획 전시 관람 (3명)</p>
-                                            <p class="text-gray-400 text-[10px] mt-1.5 relative z-10">* 일반 자유 전시는 인원 제한 없이 누구나 관람 가능</p>
+                                            <p class="text-gray-400 text-[0.625rem] mt-1.5 relative z-10">* 일반 자유 전시는 인원 제한 없이 누구나 관람 가능</p>
                                         </div>
                                     </div>
                                 </div>
 
-                                <!-- B팀 -->
                                 <div class="bg-white p-3.5 rounded-xl border border-gray-200 shadow-sm">
-                                    <h5 class="font-bold text-[14px] text-seoul-green mb-2.5 flex items-center"><i class="fa-solid fa-building mr-1.5"></i>B팀: DDP 투어</h5>
+                                    <h5 class="font-bold text-sm text-seoul-green mb-2.5 flex items-center"><i class="fa-solid fa-building mr-1.5"></i>B팀: DDP 투어</h5>
                                     <div class="text-xs text-gray-700 space-y-1.5 ml-1">
                                         <p class="flex items-start"><i class="fa-solid fa-ticket text-seoul-green w-4 text-center mt-0.5 mr-1"></i> <span><strong>전시명:</strong> 기술이 사람을 만날 때: 연결은 마음을 향한다 </span></p>
                                         <p class="text-gray-500 mt-1 pl-5 leading-relaxed">첨단 기술과 따뜻한 인간 감성이 만나는 혁신적인 디지털 체험전</p>
                                     </div>
                                 </div>
 
-                                <!-- 자유탐방 -->
                                 <div class="bg-gray-50 p-3.5 rounded-xl border border-gray-200 shadow-sm">
-                                    <h5 class="font-bold text-[13px] text-seoul-charcoal mb-1.5 flex items-center"><i class="fa-solid fa-mug-hot text-amber-600 mr-1.5"></i>자유 탐방 및 휴식</h5>
+                                    <h5 class="font-bold text-[0.8125rem] text-seoul-charcoal mb-1.5 flex items-center"><i class="fa-solid fa-mug-hot text-amber-600 mr-1.5"></i>자유 탐방 및 휴식</h5>
                                     <p class="text-xs text-gray-600 leading-relaxed ml-1">원하시는 실내 전시관이나 핫플레이스를 조별로 자유롭게 방문하셔도 무방합니다. 따사로운 햇볕도 괜찮으시다면 근처 유적지, 공원 탐방이나 편하게 <strong>숙소에서 쉬시는 것도 좋습니다!</strong></p>
                                 </div>
 
@@ -447,31 +413,30 @@
                         </div>
                     </div>
                     
-                    <!-- 2일차 일정 3 -->
                     <div class="relative pl-12 mb-4">
                         <div class="absolute left-3.5 top-5 w-2.5 h-2.5 rounded-full bg-seoul-green -translate-x-1/2 shadow-[0_0_0_4px_#F8F6F0]"></div>
                         <button class="accordion-btn w-full text-left bg-white p-4 rounded-xl shadow-sm border border-seoul-line active:scale-[0.99] transition-transform" onclick="toggleAccordion(this)">
                             <div class="flex justify-between items-start">
                                 <div>
-                                    <span class="text-[11px] font-bold text-seoul-green block mb-1 tracking-wide">13:00 - 16:30</span>
-                                    <h4 class="text-[15px] font-bold text-seoul-charcoal">최종 집결 / 대전 이동</h4>
+                                    <span class="text-[0.6875rem] font-bold text-seoul-green block mb-1 tracking-wide">13:00 - 16:30</span>
+                                    <h4 class="text-[0.9375rem] font-bold text-seoul-charcoal">최종 집결 / 대전 이동</h4>
                                 </div>
                                 <i class="fa-solid fa-chevron-down text-gray-300 mt-1 icon-rotate"></i>
                             </div>
                         </button>
                         <div class="accordion-content bg-white rounded-b-xl border-x border-b border-seoul-line -mt-2 pt-2 px-4">
                             <div class="py-3 mt-2 text-sm text-gray-600">
-                                <p class="mb-3 font-bold text-seoul-charcoal text-[13px] bg-red-50 px-2 py-1.5 rounded inline-block border border-red-100 shadow-sm"><i class="fa-solid fa-camera text-seoul-red mr-1.5"></i>상세 안내 탭의 [수하물/집결 안내] 필독!</p>
+                                <p class="mb-3 font-bold text-seoul-charcoal text-[0.8125rem] bg-red-50 px-2 py-1.5 rounded inline-block border border-red-100 shadow-sm"><i class="fa-solid fa-camera text-seoul-red mr-1.5"></i>상세 안내 탭의 [수하물/집결 안내] 필독!</p>
                                 
                                 <div class="relative pl-4 border-l-2 border-gray-200 space-y-5 py-2 mt-2 ml-2">
                                     <div class="relative">
-                                        <div class="absolute -left-[25px] top-0.5 bg-seoul-charcoal text-white w-5 h-5 rounded flex items-center justify-center text-[11px] font-bold shadow-sm">1</div>
-                                        <p class="font-bold text-seoul-charcoal text-[14px]">13:00 / 13:30</p>
+                                        <div class="absolute -left-[25px] top-0.5 bg-seoul-charcoal text-white w-5 h-5 rounded flex items-center justify-center text-[0.6875rem] font-bold shadow-sm">1</div>
+                                        <p class="font-bold text-seoul-charcoal text-sm">13:00 / 13:30</p>
                                         <p class="text-gray-500 text-xs mt-1">호텔 1차 집결(짐 보관자) <br> DDP 2차 최종 집결(전원)</p>
                                     </div>
                                     <div class="relative">
-                                        <div class="absolute -left-[25px] top-0.5 bg-seoul-charcoal text-white w-5 h-5 rounded flex items-center justify-center text-[11px] font-bold shadow-sm">2</div>
-                                        <p class="font-bold text-seoul-charcoal text-[14px]">오후 4시 30분</p>
+                                        <div class="absolute -left-[25px] top-0.5 bg-seoul-charcoal text-white w-5 h-5 rounded flex items-center justify-center text-[0.6875rem] font-bold shadow-sm">2</div>
+                                        <p class="font-bold text-seoul-charcoal text-sm">오후 4시 30분</p>
                                         <p class="text-gray-500 text-xs mt-1">대전 도착 예정 (희망) 시간</p>
                                     </div>
                                 </div>
@@ -496,60 +461,56 @@
                 <!-- A Group -->
                 <div class="bg-white p-5 rounded-2xl shadow-sm border border-seoul-line">
                     <div class="flex items-center justify-between mb-3 border-b border-gray-100 pb-3">
-                        <h3 class="font-bold text-seoul-red text-[16px]"><i class="fa-solid fa-users mr-2 opacity-80"></i>로봇 인공지능 과학관 투어</h3>
-                        <span class="bg-[#FFF5F3] text-seoul-red text-[11px] font-bold px-2.5 py-1 rounded-full border border-orange-100 shadow-sm"><i class="fa-solid fa-crown mr-1 text-amber-500"></i>신보라</span>
+                        <h3 class="font-bold text-seoul-red text-base"><i class="fa-solid fa-users mr-2 opacity-80"></i>로봇 인공지능 과학관 투어</h3>
+                        <span class="bg-[#FFF5F3] text-seoul-red text-[0.6875rem] font-bold px-2.5 py-1 rounded-full border border-orange-100 shadow-sm"><i class="fa-solid fa-crown mr-1 text-amber-500"></i>신보라</span>
                     </div>
-                    <div class="bg-gray-50 p-3 rounded-xl border border-gray-200 mb-3 text-[12px] space-y-1.5">
+                    <div class="bg-gray-50 p-3 rounded-xl border border-gray-200 mb-3 text-xs space-y-1.5">
                         <p class="flex items-start text-gray-700"><i class="fa-solid fa-location-dot mt-[3px] w-4 text-seoul-red text-center mr-1.5"></i> <span class="font-bold mr-1">장소:</span>서울 로봇 인공지능 과학관(창동)</p>
                     </div>
-                    <!-- 명단 리스트 및 입력창 -->
                     <div id="list-A팀" class="flex flex-wrap gap-2 mb-3 empty:hidden"></div>
                     <div class="flex gap-2">
-                        <input type="text" id="input-A팀" class="flex-1 border border-gray-200 rounded-lg px-3 py-2 text-[13px] outline-none focus:border-seoul-red transition-colors bg-gray-50" placeholder="본인 이름 입력 (예: 홍길동)">
-                        <button onclick="addParticipant('A팀')" class="bg-seoul-red text-white px-4 py-2 rounded-lg text-[13px] font-bold active:scale-95 transition-transform whitespace-nowrap shadow-sm">추가</button>
+                        <input type="text" id="input-A팀" class="flex-1 border border-gray-200 rounded-lg px-3 py-2 text-[0.8125rem] outline-none focus:border-seoul-red transition-colors bg-gray-50" placeholder="본인 이름 입력 (예: 홍길동)">
+                        <button onclick="addParticipant('A팀')" class="bg-seoul-red text-white px-4 py-2 rounded-lg text-[0.8125rem] font-bold active:scale-95 transition-transform whitespace-nowrap shadow-sm">추가</button>
                     </div>
                 </div>
 
                 <!-- B Group -->
                 <div class="bg-white p-5 rounded-2xl shadow-sm border border-seoul-line">
                     <div class="flex items-center justify-between mb-3 border-b border-gray-100 pb-3">
-                        <h3 class="font-bold text-seoul-green text-[16px]"><i class="fa-solid fa-users mr-2 opacity-80"></i>DDP 투어</h3>
+                        <h3 class="font-bold text-seoul-green text-base"><i class="fa-solid fa-users mr-2 opacity-80"></i>DDP 투어</h3>
                     </div>
-                    <div class="bg-gray-50 p-3 rounded-xl border border-gray-200 mb-3 text-[12px] space-y-1.5">
+                    <div class="bg-gray-50 p-3 rounded-xl border border-gray-200 mb-3 text-xs space-y-1.5">
                         <p class="flex items-start text-gray-700"><i class="fa-solid fa-location-dot mt-[3px] w-4 text-seoul-green text-center mr-1.5"></i> <span class="font-bold mr-1">장소:</span>DDP 배움터 1층 DDP 쇼룸</p>
                         <p class="flex items-start text-gray-700"><i class="fa-solid fa-ticket mt-[3px] w-4 text-seoul-green text-center mr-1.5"></i> <span class="font-bold mr-1">전시명:</span>기술이 사람을 만날 때: 연결은 마음을 향한다</p>
                     </div>
-                    <!-- 명단 리스트 및 입력창 -->
                     <div id="list-B팀" class="flex flex-wrap gap-2 mb-3 empty:hidden"></div>
                     <div class="flex gap-2">
-                        <input type="text" id="input-B팀" class="flex-1 border border-gray-200 rounded-lg px-3 py-2 text-[13px] outline-none focus:border-seoul-green transition-colors bg-gray-50" placeholder="본인 이름 입력">
-                        <button onclick="addParticipant('B팀')" class="bg-seoul-green text-white px-4 py-2 rounded-lg text-[13px] font-bold active:scale-95 transition-transform whitespace-nowrap shadow-sm">추가</button>
+                        <input type="text" id="input-B팀" class="flex-1 border border-gray-200 rounded-lg px-3 py-2 text-[0.8125rem] outline-none focus:border-seoul-green transition-colors bg-gray-50" placeholder="본인 이름 입력">
+                        <button onclick="addParticipant('B팀')" class="bg-seoul-green text-white px-4 py-2 rounded-lg text-[0.8125rem] font-bold active:scale-95 transition-transform whitespace-nowrap shadow-sm">추가</button>
                     </div>
                 </div>
 
                 <!-- C Group -->
                 <div class="bg-white p-5 rounded-2xl shadow-sm border border-seoul-line">
                     <div class="flex items-center justify-between mb-3 border-b border-gray-100 pb-3">
-                        <h3 class="font-bold text-amber-600 text-[16px]"><i class="fa-solid fa-users mr-2 opacity-80"></i>자유 투어: 호텔 버스 탑승</h3>
+                        <h3 class="font-bold text-amber-600 text-base"><i class="fa-solid fa-users mr-2 opacity-80"></i>자유 투어: 호텔 버스 탑승</h3>
                     </div>
-                    <!-- 명단 리스트 및 입력창 -->
                     <div id="list-C그룹" class="flex flex-wrap gap-2 mb-3 empty:hidden"></div>
                     <div class="flex gap-2">
-                        <input type="text" id="input-C그룹" class="flex-1 border border-gray-200 rounded-lg px-3 py-2 text-[13px] outline-none focus:border-amber-500 transition-colors bg-gray-50" placeholder="본인 이름 입력">
-                        <button onclick="addParticipant('C그룹')" class="bg-amber-500 text-white px-4 py-2 rounded-lg text-[13px] font-bold active:scale-95 transition-transform whitespace-nowrap shadow-sm">추가</button>
+                        <input type="text" id="input-C그룹" class="flex-1 border border-gray-200 rounded-lg px-3 py-2 text-[0.8125rem] outline-none focus:border-amber-500 transition-colors bg-gray-50" placeholder="본인 이름 입력">
+                        <button onclick="addParticipant('C그룹')" class="bg-amber-500 text-white px-4 py-2 rounded-lg text-[0.8125rem] font-bold active:scale-95 transition-transform whitespace-nowrap shadow-sm">추가</button>
                     </div>
                 </div>
 
                 <!-- D Group -->
                 <div class="bg-white p-5 rounded-2xl shadow-sm border border-seoul-line">
                     <div class="flex items-center justify-between mb-3 border-b border-gray-100 pb-3">
-                        <h3 class="font-bold text-blue-600 text-[16px]"><i class="fa-solid fa-users mr-2 opacity-80"></i>자유 투어: DDP 버스 탑승</h3>
+                        <h3 class="font-bold text-blue-600 text-base"><i class="fa-solid fa-users mr-2 opacity-80"></i>자유 투어: DDP 버스 탑승</h3>
                     </div>
-                    <!-- 명단 리스트 및 입력창 -->
                     <div id="list-D그룹" class="flex flex-wrap gap-2 mb-3 empty:hidden"></div>
                     <div class="flex gap-2">
-                        <input type="text" id="input-D그룹" class="flex-1 border border-gray-200 rounded-lg px-3 py-2 text-[13px] outline-none focus:border-blue-500 transition-colors bg-gray-50" placeholder="본인 이름 입력">
-                        <button onclick="addParticipant('D그룹')" class="bg-blue-500 text-white px-4 py-2 rounded-lg text-[13px] font-bold active:scale-95 transition-transform whitespace-nowrap shadow-sm">추가</button>
+                        <input type="text" id="input-D그룹" class="flex-1 border border-gray-200 rounded-lg px-3 py-2 text-[0.8125rem] outline-none focus:border-blue-500 transition-colors bg-gray-50" placeholder="본인 이름 입력">
+                        <button onclick="addParticipant('D그룹')" class="bg-blue-500 text-white px-4 py-2 rounded-lg text-[0.8125rem] font-bold active:scale-95 transition-transform whitespace-nowrap shadow-sm">추가</button>
                     </div>
                 </div>
             </div>
@@ -566,53 +527,53 @@
             <div class="px-5 py-6 max-w-md mx-auto space-y-5">
                 <!-- 집결 안내 -->
                 <div class="bg-white p-5 rounded-2xl shadow-sm border border-seoul-line">
-                    <h3 class="font-bold text-seoul-red mb-3 flex items-center text-[15px]">
+                    <h3 class="font-bold text-seoul-red mb-3 flex items-center text-[0.9375rem]">
                         <i class="fa-solid fa-flag mr-2"></i>집결 및 출발 안내
                     </h3>
                     <div class="bg-[#FFF5F3] p-4 rounded-xl border border-orange-100 mb-4 space-y-4">
                         <div class="text-center">
-                            <p class="text-xs font-bold text-seoul-red mb-1 bg-white border border-orange-100 inline-block px-2 py-0.5 rounded-full">대전 ➡️ 서울</p>
-                            <p class="text-[14px] font-bold text-seoul-charcoal">7월 3일(금) 오후 <span class="text-seoul-red text-lg">13:00</span> 출발</p>
+                            <p class="text-[0.6875rem] font-bold text-seoul-red mb-1 bg-white border border-orange-100 inline-block px-2 py-0.5 rounded-full">대전 ➡️ 서울</p>
+                            <p class="text-sm font-bold text-seoul-charcoal">7월 3일(금) 오후 <span class="text-seoul-red text-lg">13:00</span> 출발</p>
                         </div>
                         <div class="w-full h-px bg-orange-200"></div>
                         <div class="text-center">
-                            <p class="text-xs font-bold text-seoul-green mb-1 bg-white border border-emerald-100 inline-block px-2 py-0.5 rounded-full">서울 ➡️ 대전</p>
-                            <p class="text-[14px] font-bold text-seoul-charcoal">7월 4일(토) 오후 <span class="text-seoul-green text-lg">14:00</span> 출발</p>
-                            <p class="text-[13px] font-bold text-seoul-charcoal mt-1.5 bg-[#F0F7F3] inline-block px-3 py-1 rounded-lg border border-emerald-100"><i class="fa-solid fa-location-dot text-seoul-green mr-1.5"></i>DDP</p>
+                            <p class="text-[0.6875rem] font-bold text-seoul-green mb-1 bg-white border border-emerald-100 inline-block px-2 py-0.5 rounded-full">서울 ➡️ 대전</p>
+                            <p class="text-sm font-bold text-seoul-charcoal">7월 4일(토) 오후 <span class="text-seoul-green text-lg">14:00</span> 출발</p>
+                            <p class="text-[0.8125rem] font-bold text-seoul-charcoal mt-1.5 bg-[#F0F7F3] inline-block px-3 py-1 rounded-lg border border-emerald-100"><i class="fa-solid fa-location-dot text-seoul-green mr-1.5"></i>DDP</p>
                         </div>
                     </div>
-                    <ul class="text-[13px] text-gray-600 list-disc ml-5">
+                    <ul class="text-[0.8125rem] text-gray-600 list-disc ml-5">
                         <li>원활한 출발을 위해 시간 엄수 부탁드립니다.</li>
                     </ul>
                 </div>
 
                 <!-- 수하물 보관 및 최종 집결 시간 안내 -->
                 <div class="bg-white p-5 rounded-2xl shadow-sm border border-seoul-line">
-                    <h3 class="font-bold text-seoul-charcoal mb-3 flex items-center text-[15px]">
+                    <h3 class="font-bold text-seoul-charcoal mb-3 flex items-center text-[0.9375rem]">
                         <i class="fa-solid fa-suitcase-rolling text-blue-500 mr-2"></i>[필독] 수하물 보관 및 집결
                     </h3>
                     <p class="text-xs text-gray-600 mb-4 leading-relaxed">매끄러운 짐 처리와 단체 사진 촬영을 위해 다음 시간을 반드시 지켜주시기 바랍니다.</p>
                     
                     <div class="relative pl-4 border-l-2 border-blue-200 space-y-5 py-2 ml-2">
                         <div class="relative">
-                            <div class="absolute -left-[25px] top-0.5 bg-blue-500 text-white w-5 h-5 rounded flex items-center justify-center text-[11px] font-bold shadow-sm">1</div>
-                            <p class="font-bold text-seoul-charcoal text-[14px] mb-1">13:00 - 호텔 로비 1차 집결</p>
+                            <div class="absolute -left-[25px] top-0.5 bg-blue-500 text-white w-5 h-5 rounded flex items-center justify-center text-[0.6875rem] font-bold shadow-sm">1</div>
+                            <p class="font-bold text-seoul-charcoal text-sm mb-1">13:00 - 호텔 로비 1차 집결</p>
                             <p class="text-gray-600 text-xs leading-relaxed">호텔에 짐을 맡겨두고 개인 활동을 다녀오신 선생님들은 로비로 모여주세요. (버스타고 DDP 이동 예정)</p>
                             <div class="mt-2 bg-red-50 p-2 rounded-lg border border-red-100 text-xs text-red-800">
                                 <span class="font-bold">⚠️ 수하물 확인 필수:</span> 짐을 맡기시는 분들은 사전에 <STRONG>박덕호 선생님께</STRONG> 수하물의 형태와 종류를 필히 말씀해 주셔야 합니다.
                             </div>
                         </div>
                         <div class="relative">
-                            <div class="absolute -left-[25px] top-0.5 bg-blue-500 text-white w-5 h-5 rounded flex items-center justify-center text-[11px] font-bold shadow-sm">2</div>
-                            <p class="font-bold text-seoul-charcoal text-[14px] mb-1">13:30 - DDP 2차 최종 집결 📸</p>
+                            <div class="absolute -left-[25px] top-0.5 bg-blue-500 text-white w-5 h-5 rounded flex items-center justify-center text-[0.6875rem] font-bold shadow-sm">2</div>
+                            <p class="font-bold text-seoul-charcoal text-sm mb-1">13:30 - DDP 2차 최종 집결 📸</p>
                             <p class="text-gray-600 text-xs leading-relaxed">DDP에서 합류하시는 분들을 포함하여 <strong>전 교직원 최종 집결 시간</strong>입니다. 단체 사진 촬영이 있으니 늦지 않게 꼭 모여주세요!</p>
                             <div class="mt-2 bg-gray-50 p-2 rounded-lg border border-gray-200 text-xs text-gray-700 font-medium">
                                 <i class="fa-solid fa-location-dot text-seoul-red mr-1"></i> <strong>집결 장소:</strong> 지하 2층 어울림광장(지하철 동대문역사문화공원역 1번 출구 앞 거대한 지붕 그늘 아래)
                             </div>
                         </div>
                         <div class="relative">
-                            <div class="absolute -left-[25px] top-0.5 bg-blue-500 text-white w-5 h-5 rounded flex items-center justify-center text-[11px] font-bold shadow-sm">3</div>
-                            <p class="font-bold text-seoul-charcoal text-[14px] mb-1">14:00 - 대전 출발</p>
+                            <div class="absolute -left-[25px] top-0.5 bg-blue-500 text-white w-5 h-5 rounded flex items-center justify-center text-[0.6875rem] font-bold shadow-sm">3</div>
+                            <p class="font-bold text-seoul-charcoal text-sm mb-1">14:00 - 대전 출발</p>
                             <p class="text-gray-600 text-xs">DDP 앞에 대기 중인 버스에 탑승하여 대전으로 출발합니다.</p>
                         </div>
                     </div>
@@ -620,7 +581,7 @@
 
                 <!-- 비상 연락망 -->
                 <div class="bg-white p-5 rounded-2xl border border-seoul-line shadow-sm">
-                    <h3 class="font-bold text-seoul-charcoal mb-3 flex items-center text-[15px]">
+                    <h3 class="font-bold text-seoul-charcoal mb-3 flex items-center text-[0.9375rem]">
                         <i class="fa-solid fa-phone-volume mr-2 text-seoul-red"></i>비상 연락망
                     </h3>
                     <div class="grid grid-cols-3 gap-2">
@@ -628,21 +589,21 @@
                             <div class="w-8 h-8 bg-white rounded-full flex items-center justify-center text-seoul-red mb-1.5 shadow-sm">
                                 <i class="fa-solid fa-phone"></i>
                             </div>
-                            <span class="text-[10px] text-gray-500 mb-0.5">간사</span>
+                            <span class="text-[0.625rem] text-gray-500 mb-0.5">간사</span>
                             <span class="text-xs font-bold text-seoul-charcoal">김왕균</span>
                         </a>
                         <a href="tel:010-2667-3197" class="bg-[#FFF5F3] border border-orange-100 rounded-xl aspect-square flex flex-col items-center justify-center shadow-sm active:bg-orange-100 transition-colors">
                             <div class="w-8 h-8 bg-white rounded-full flex items-center justify-center text-seoul-red mb-1.5 shadow-sm">
                                 <i class="fa-solid fa-phone"></i>
                             </div>
-                            <span class="text-[10px] text-gray-500 mb-0.5">간사</span>
+                            <span class="text-[0.625rem] text-gray-500 mb-0.5">간사</span>
                             <span class="text-xs font-bold text-seoul-charcoal">박덕호</span>
                         </a>
                         <a href="tel:010-2408-6467" class="bg-[#FFF5F3] border border-orange-100 rounded-xl aspect-square flex flex-col items-center justify-center shadow-sm active:bg-orange-100 transition-colors">
                             <div class="w-8 h-8 bg-white rounded-full flex items-center justify-center text-seoul-red mb-1.5 shadow-sm">
                                 <i class="fa-solid fa-phone"></i>
                             </div>
-                            <span class="text-[10px] text-gray-500 mb-0.5">간사</span>
+                            <span class="text-[0.625rem] text-gray-500 mb-0.5">간사</span>
                             <span class="text-xs font-bold text-seoul-charcoal">유민아</span>
                         </a>
                     </div>
@@ -659,168 +620,163 @@
             </div>
             
             <div class="px-5 py-6 max-w-md mx-auto space-y-5">
-                <!-- 리조트 정보 (사진 제거, 다크 차콜 배경 적용) -->
                  <div class="bg-white rounded-2xl shadow-sm border border-seoul-line overflow-hidden">
                     <div class="h-32 bg-seoul-charcoal relative flex items-center justify-center text-white overflow-hidden">
                         <div class="relative z-10 text-center px-4">
                             <h3 class="font-bold text-xl mb-1 text-white"><i class="fa-solid fa-hotel mr-2 text-seoul-red"></i>호텔 아트리움</h3>
-                            <p class="text-[11px] text-gray-300">편안한 휴식과 여행의 시작을 함께할 숙소입니다.</p>
+                            <p class="text-[0.6875rem] text-gray-300">편안한 휴식과 여행의 시작을 함께할 숙소입니다.</p>
                         </div>
                     </div>
                     <div class="p-5 bg-gray-50">
-                        <div class="grid grid-cols-2 gap-3 text-[13px]">
+                        <div class="grid grid-cols-2 gap-3 text-[0.8125rem]">
                             <div class="flex flex-col items-center justify-center p-3 bg-white rounded-lg border border-gray-200 text-center shadow-sm">
                                 <i class="fa-solid fa-map-pin text-seoul-green text-lg mb-1"></i>
                                 <span class="font-bold text-seoul-charcoal">위치</span>
-                                <span class="text-gray-500 text-[11px] mt-1">종로5가역, 광장시장 근처</span>
+                                <span class="text-gray-500 text-[0.6875rem] mt-1">종로5가역, 광장시장 근처</span>
                             </div>
                             <div class="flex flex-col items-center justify-center p-3 bg-white rounded-lg border border-gray-200 text-center shadow-sm">
                                 <i class="fa-regular fa-clock text-seoul-red text-lg mb-1"></i>
                                 <span class="font-bold text-seoul-charcoal">체크인/아웃</span>
-                                <span class="text-gray-500 text-[11px] mt-1">도착 후 바로 / 11:00</span>
+                                <span class="text-gray-500 text-[0.6875rem] mt-1">도착 후 바로 / 11:00</span>
                             </div>
                         </div>
                     </div>
                  </div>
 
-                 <!-- 숙소 가는 길 추가 -->
                  <div class="bg-white p-5 rounded-2xl shadow-sm border border-seoul-line">
-                    <h3 class="font-bold text-seoul-charcoal mb-3 flex items-center text-[15px]">
+                    <h3 class="font-bold text-seoul-charcoal mb-3 flex items-center text-[0.9375rem]">
                         <i class="fa-solid fa-map-location-dot text-seoul-red mr-2"></i>숙소 가는 길
                     </h3>
                     <div class="grid grid-cols-2 gap-3">
                         <a href="nmap://route/walk?dlat=37.571408&dlng=126.996720&dname=%ED%98%B8%ED%85%94%EC%95%84%ED%8A%B8%EB%A6%AC%EC%9B%80%EC%84%9C%EC%9A%B8%EC%A2%85%EB%A1%9C&appname=pamphlet" class="bg-[#03C75A] text-white rounded-xl p-3 flex flex-col items-center justify-center shadow-sm active:scale-95 transition-transform">
                             <span class="font-black italic mb-1 text-lg">N</span>
-                            <span class="text-[11px] font-bold">네이버 길찾기(도보)</span>
+                            <span class="text-[0.6875rem] font-bold">네이버 길찾기(도보)</span>
                         </a>
                         <a href="kakaomap://route?ep=37.571408,126.996720&en=%ED%98%B8%ED%85%94%20%EC%95%84%ED%8A%B8%EB%A6%AC%EC%9B%80%20%EC%84%9C%EC%9A%B8%20%EC%A2%85%EB%A1%9C&by=FOOT" class="bg-[#FEE500] text-[#191919] rounded-xl p-3 flex flex-col items-center justify-center shadow-sm active:scale-95 transition-transform">
                             <i class="fa-solid fa-location-arrow mb-1 text-lg"></i>
-                            <span class="text-[11px] font-bold">카카오 길찾기(도보)</span>
+                            <span class="text-[0.6875rem] font-bold">카카오 길찾기(도보)</span>
                         </a>
                     </div>
                  </div>
 
-                 <!-- 조식 운영 정보 추가 -->
                  <div class="bg-white p-5 rounded-2xl shadow-sm border border-seoul-line">
-                    <h3 class="font-bold text-seoul-charcoal mb-3 flex items-center text-[15px]">
+                    <h3 class="font-bold text-seoul-charcoal mb-3 flex items-center text-[0.9375rem]">
                         <i class="fa-solid fa-utensils text-seoul-green mr-2"></i>조식 이용 안내
                     </h3>
-                    <div class="bg-gray-50 p-3.5 rounded-xl border border-gray-200 text-[13px] text-gray-600 space-y-2 shadow-inner">
+                    <div class="bg-gray-50 p-3.5 rounded-xl border border-gray-200 text-[0.8125rem] text-gray-600 space-y-2 shadow-inner">
                         <p class="flex items-start"><i class="fa-solid fa-location-dot mt-0.5 text-seoul-red w-5 text-center"></i> <span><strong>장소:</strong> 호텔 1층 다이닝룸 (한식·양식)</span></p>
                         <p class="flex items-start"><i class="fa-regular fa-clock mt-0.5 text-gray-500 w-5 text-center"></i> <span><strong>시간:</strong> 07:00 ~ 09:30 <span class="text-seoul-red font-bold">(09:00 입장마감)</span></span></p>
                         <div class="mt-2 border-t border-gray-200 pt-2 text-xs">
                             <p class="font-bold text-gray-700 mb-1.5">시간대별 혼잡도 예측</p>
-                            <p class="flex items-center"><span class="w-16">07:00</span> <span class="bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded text-[10px] font-bold">양호</span></p>
-                            <p class="flex items-center mt-1"><span class="w-16">07:40</span> <span class="bg-red-100 text-red-700 px-2 py-0.5 rounded text-[10px] font-bold">혼잡</span></p>
-                            <p class="flex items-center mt-1"><span class="w-16">08:20</span> <span class="bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded text-[10px] font-bold">양호</span></p>
+                            <p class="flex items-center"><span class="w-16">07:00</span> <span class="bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded text-[0.625rem] font-bold">양호</span></p>
+                            <p class="flex items-center mt-1"><span class="w-16">07:40</span> <span class="bg-red-100 text-red-700 px-2 py-0.5 rounded text-[0.625rem] font-bold">혼잡</span></p>
+                            <p class="flex items-center mt-1"><span class="w-16">08:20</span> <span class="bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded text-[0.625rem] font-bold">양호</span></p>
                         </div>
                     </div>
                  </div>
 
-                 <!-- 객실 배정 -->
                  <div class="bg-white p-5 rounded-2xl shadow-sm border border-seoul-line">
-                    <h3 class="font-bold text-seoul-charcoal mb-4 flex items-center text-[15px]">
+                    <h3 class="font-bold text-seoul-charcoal mb-4 flex items-center text-[0.9375rem]">
                         <i class="fa-solid fa-bed text-seoul-red mr-2"></i>객실 배정 안내
                     </h3>
                     
                     <div class="grid grid-cols-3 gap-2">
-                        <!-- 각 방을 3열 정사각형 아이콘 디자인으로 배치 -->
                         <div class="bg-white border border-gray-200 rounded-xl aspect-square flex flex-col items-center justify-center shadow-sm p-1">
                             <div class="w-7 h-7 bg-orange-50 rounded-full flex items-center justify-center text-seoul-red mb-1.5 shadow-sm">
-                                <i class="fa-solid fa-key text-[11px]"></i>
+                                <i class="fa-solid fa-key text-[0.6875rem]"></i>
                             </div>
-                            <p class="text-[11px] font-bold text-seoul-charcoal text-center leading-tight tracking-tighter">
+                            <p class="text-[0.6875rem] font-bold text-seoul-charcoal text-center leading-tight tracking-tighter">
                                 임동순, 김예지
                             </p>
                         </div>
                         <div class="bg-white border border-gray-200 rounded-xl aspect-square flex flex-col items-center justify-center shadow-sm p-1">
                             <div class="w-7 h-7 bg-orange-50 rounded-full flex items-center justify-center text-seoul-red mb-1.5 shadow-sm">
-                                <i class="fa-solid fa-key text-[11px]"></i>
+                                <i class="fa-solid fa-key text-[0.6875rem]"></i>
                             </div>
-                            <p class="text-[11px] font-bold text-seoul-charcoal text-center leading-tight tracking-tighter">
+                            <p class="text-[0.6875rem] font-bold text-seoul-charcoal text-center leading-tight tracking-tighter">
                                 손연숙, 유혜원
                             </p>
                         </div>
                         <div class="bg-white border border-gray-200 rounded-xl aspect-square flex flex-col items-center justify-center shadow-sm p-1">
                             <div class="w-7 h-7 bg-emerald-50 rounded-full flex items-center justify-center text-seoul-green mb-1.5 shadow-sm">
-                                <i class="fa-solid fa-key text-[11px]"></i>
+                                <i class="fa-solid fa-key text-[0.6875rem]"></i>
                             </div>
-                            <p class="text-[11px] font-bold text-seoul-charcoal text-center leading-tight tracking-tighter">
+                            <p class="text-[0.6875rem] font-bold text-seoul-charcoal text-center leading-tight tracking-tighter">
                                 김애란, 서종례<br>이윤경
                             </p>
                         </div>
                         <div class="bg-white border border-gray-200 rounded-xl aspect-square flex flex-col items-center justify-center shadow-sm p-1">
                             <div class="w-7 h-7 bg-gray-50 rounded-full flex items-center justify-center text-seoul-charcoal mb-1.5 shadow-sm">
-                                <i class="fa-solid fa-key text-[11px]"></i>
+                                <i class="fa-solid fa-key text-[0.6875rem]"></i>
                             </div>
-                            <p class="text-[11px] font-bold text-seoul-charcoal text-center leading-tight tracking-tighter">
+                            <p class="text-[0.6875rem] font-bold text-seoul-charcoal text-center leading-tight tracking-tighter">
                                 이창수, 김왕균<br>이철섭, 김영호
                             </p>
                         </div>
                         <div class="bg-white border border-gray-200 rounded-xl aspect-square flex flex-col items-center justify-center shadow-sm p-1">
                             <div class="w-7 h-7 bg-gray-50 rounded-full flex items-center justify-center text-seoul-charcoal mb-1.5 shadow-sm">
-                                <i class="fa-solid fa-key text-[11px]"></i>
+                                <i class="fa-solid fa-key text-[0.6875rem]"></i>
                             </div>
-                            <p class="text-[11px] font-bold text-seoul-charcoal text-center leading-tight tracking-tighter">
+                            <p class="text-[0.6875rem] font-bold text-seoul-charcoal text-center leading-tight tracking-tighter">
                                 정지현, 신보라<br>정진경, 정수지
                             </p>
                         </div>
                         <div class="bg-white border border-gray-200 rounded-xl aspect-square flex flex-col items-center justify-center shadow-sm p-1">
                             <div class="w-7 h-7 bg-gray-50 rounded-full flex items-center justify-center text-seoul-charcoal mb-1.5 shadow-sm">
-                                <i class="fa-solid fa-key text-[11px]"></i>
+                                <i class="fa-solid fa-key text-[0.6875rem]"></i>
                             </div>
-                            <p class="text-[11px] font-bold text-seoul-charcoal text-center leading-tight tracking-tighter">
+                            <p class="text-[0.6875rem] font-bold text-seoul-charcoal text-center leading-tight tracking-tighter">
                                 유민아, 남궁유진<br>김지연, 김예진
                             </p>
                         </div>
                         <div class="bg-white border border-gray-200 rounded-xl aspect-square flex flex-col items-center justify-center shadow-sm p-1">
                             <div class="w-7 h-7 bg-gray-50 rounded-full flex items-center justify-center text-seoul-charcoal mb-1.5 shadow-sm">
-                                <i class="fa-solid fa-key text-[11px]"></i>
+                                <i class="fa-solid fa-key text-[0.6875rem]"></i>
                             </div>
-                            <p class="text-[11px] font-bold text-seoul-charcoal text-center leading-tight tracking-tighter">
+                            <p class="text-[0.6875rem] font-bold text-seoul-charcoal text-center leading-tight tracking-tighter">
                                 박선형, 김은정<br>서영미, 천은성
                             </p>
                         </div>
                         <div class="bg-white border border-gray-200 rounded-xl aspect-square flex flex-col items-center justify-center shadow-sm p-1">
                             <div class="w-7 h-7 bg-gray-50 rounded-full flex items-center justify-center text-seoul-charcoal mb-1.5 shadow-sm">
-                                <i class="fa-solid fa-key text-[11px]"></i>
+                                <i class="fa-solid fa-key text-[0.6875rem]"></i>
                             </div>
-                            <p class="text-[11px] font-bold text-seoul-charcoal text-center leading-tight tracking-tighter">
+                            <p class="text-[0.6875rem] font-bold text-seoul-charcoal text-center leading-tight tracking-tighter">
                                 김재우, 김용상<br>박덕호, 성수현
                             </p>
                         </div>
                         <div class="bg-white border border-gray-200 rounded-xl aspect-square flex flex-col items-center justify-center shadow-sm p-1">
                             <div class="w-7 h-7 bg-gray-50 rounded-full flex items-center justify-center text-seoul-charcoal mb-1.5 shadow-sm">
-                                <i class="fa-solid fa-key text-[11px]"></i>
+                                <i class="fa-solid fa-key text-[0.6875rem]"></i>
                             </div>
-                            <p class="text-[11px] font-bold text-seoul-charcoal text-center leading-tight tracking-tighter">
+                            <p class="text-[0.6875rem] font-bold text-seoul-charcoal text-center leading-tight tracking-tighter">
                                 윤은주, 방미라<br>정학명, 김정아
                             </p>
                         </div>
                         <div class="bg-white border border-gray-200 rounded-xl aspect-square flex flex-col items-center justify-center shadow-sm p-1">
                             <div class="w-7 h-7 bg-gray-50 rounded-full flex items-center justify-center text-seoul-charcoal mb-1.5 shadow-sm">
-                                <i class="fa-solid fa-key text-[11px]"></i>
+                                <i class="fa-solid fa-key text-[0.6875rem]"></i>
                             </div>
-                            <p class="text-[11px] font-bold text-seoul-charcoal text-center leading-tight tracking-tighter">
+                            <p class="text-[0.6875rem] font-bold text-seoul-charcoal text-center leading-tight tracking-tighter">
                                 유보배, 임수경<br>방정은, 이미란
                             </p>
                         </div>
                     </div>
                         
-                    <div class="text-center mt-4 text-[11px] text-gray-500 bg-gray-50 py-2 rounded border border-gray-100 shadow-sm">
+                    <div class="text-center mt-4 text-[0.6875rem] text-gray-500 bg-gray-50 py-2 rounded border border-gray-100 shadow-sm">
                         * 호실 번호는 체크인 시 프론트에서 안내됩니다.
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 푸터 (Footer) -->
+        <!-- 푸터 -->
         <footer class="pt-6 pb-8 px-6 text-center">
             <div class="inline-block border-t border-seoul-line pt-5 w-[80%] mx-auto">
-                <p class="text-[11px] font-bold text-gray-500 tracking-wide mb-1">
+                <p class="text-[0.6875rem] font-bold text-gray-500 tracking-wide mb-1">
                     <i class="fa-solid fa-graduation-cap mr-1"></i> 주관: 대전법동중학교 친목회
                 </p>
-                <p class="text-[10px] font-medium text-gray-400 tracking-widest">
+                <p class="text-[0.625rem] font-medium text-gray-400 tracking-widest">
                     <i class="fa-solid fa-code mr-1"></i> App Design & Development by 김예진
                 </p>
             </div>
