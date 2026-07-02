@@ -2,38 +2,40 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <!-- 모바일 반응형 설정을 위한 필수 태그 -->
+    <!-- 모바일 기기의 시스템 설정을 존중하도록 설정 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>반응형 폰트 테스트</title>
+    <title>시스템 글꼴 반응형 웹페이지</title>
     <style>
-        /* 모바일 브라우저의 자동 글꼴 크기 조절 방지 */
+        /* 1. 시스템 설정 무시 방지: 강제로 100%로 설정 */
         html {
             -webkit-text-size-adjust: 100%;
             text-size-adjust: 100%;
         }
 
         body {
+            /* 2. px 대신 rem 사용: 1rem은 사용자 휴대폰의 기본 글꼴 크기와 같습니다 */
             font-family: sans-serif;
-            padding: 20px;
-        }
-
-        /* 폰트 크기를 확실하게 강제하는 클래스 */
-        .force-font-size {
-            font-size: 24px !important;
+            padding: 1.25rem;
             line-height: 1.5;
-            color: #333;
         }
 
-        @media (max-width: 600px) {
-            .force-font-size {
-                font-size: 20px !important; /* 모바일용 크기 */
-            }
+        /* 3. 시스템 설정에 따라 자동으로 커지는 클래스 */
+        .dynamic-font {
+            font-size: 1rem; /* 기본 본문 크기 */
+        }
+
+        .dynamic-title {
+            font-size: 1.5rem; /* 기본 크기의 1.5배 */
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
-    <div class="force-font-size">
-        이 텍스트는 모바일에서도 글꼴 크기가 적용됩니다.
+    <div class="dynamic-title">
+        시스템 설정에 반응하는 제목
+    </div>
+    <div class="dynamic-font">
+        이 텍스트는 휴대폰 설정에서 글자 크기를 키우면 자동으로 함께 커집니다.
     </div>
 </body>
 </html>
