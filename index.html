@@ -2,7 +2,8 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <!-- user-scalable=no와 maximum-scale 설정을 제거하여 휴대폰의 글씨 크기 설정 및 사용자 화면 확대가 자유롭게 작동하도록 개선합니다. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>2026학년도 교사 연찬회</title>
     
     <!-- 모바일 홈 화면 추가 시 나타날 아이콘 설정 -->
@@ -44,14 +45,18 @@
             -webkit-tap-highlight-color: transparent;
             -webkit-overflow-scrolling: touch;
             scroll-behavior: smooth;
+            /* 휴대폰 시스템의 텍스트 크기 설정을 브라우저가 자동 반영하도록 허용합니다. */
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
         }
         
         .page-view { display: none; animation: fadeIn 0.3s ease-in-out; }
         .page-view.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
         
+        /* 글씨가 커질 수 있으므로 고정높이(max-height) 여유 폭을 확보합니다. */
         .accordion-content { max-height: 0; overflow: hidden; transition: all 0.3s ease-out; opacity: 0; }
-        .accordion-content.active { max-height: 1000px; opacity: 1; padding-top: 0.5rem; padding-bottom: 1rem; }
+        .accordion-content.active { max-height: 2000px; opacity: 1; padding-top: 0.5rem; padding-bottom: 1rem; }
         .icon-rotate { transition: transform 0.3s ease; }
         .active-btn .icon-rotate { transform: rotate(180deg); }
         
@@ -91,12 +96,33 @@
             </div>
             
            <div class="px-5 mt-6 max-w-md mx-auto space-y-3 pb-4">
-                <!-- 이벤트 카드 -->
-                <div class="bg-gradient-to-br from-seoul-red to-orange-600 rounded-3xl p-5 text-white shadow-lg mb-6 relative overflow-hidden border border-white/10">
-                    <h3 class="font-black text-lg tracking-tight mb-2 flex items-center"><i class="fa-solid fa-camera-retro mr-2"></i>AI 사진 인증샷 콘테스트! 📸</h3>
-                    <p class="text-xs text-orange-50 leading-relaxed mb-3">서울 내 어디서든 AI/디지털 관련 접점이 있는 사물·장소에서 인증샷 촬영 후 단톡방 업로드!</p>
-                    <div class="flex justify-end">
-                        <span class="text-[10px] font-bold bg-white/20 px-3 py-1 rounded-full"><i class="fa-solid fa-gift mr-1"></i>시원한 기프티콘 증정!</span>
+                <!-- 스페셜 이벤트 카드 (색상 및 디자인 수정) -->
+                <div class="bg-white rounded-3xl p-5 shadow-sm mb-6 border border-blue-100 relative overflow-hidden">
+                    <div class="absolute -right-4 -top-4 w-16 h-16 bg-blue-50 rounded-full blur-xl"></div>
+                    <div class="relative z-10">
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="font-black text-[16px] text-blue-600 tracking-tight flex items-center">
+                                <i class="fa-solid fa-camera-retro mr-2"></i>[단톡방 이벤트] 찰칵! 📸
+                            </h3>
+                            <span class="text-[10px] font-bold bg-blue-50 text-blue-600 px-2.5 py-1 rounded-full border border-blue-100 animate-pulse"><i class="fa-solid fa-gift mr-1"></i>기프티콘 팡팡!</span>
+                        </div>
+                        
+                        <div class="space-y-2.5 text-[12px] text-gray-700">
+                            <div class="bg-gray-50 p-3 rounded-xl border border-gray-100">
+                                <p class="font-bold text-seoul-charcoal mb-1 flex items-center"><i class="fa-solid fa-check text-blue-500 mr-1.5 w-3 text-center"></i>참여 방법</p>
+                                <p class="text-gray-600 leading-relaxed ml-4">서울 내 어디서든 <strong>AI·디지털 관련 사물/장소</strong>에서 본인 얼굴이 작게라도 나오게 인증샷 촬영 후 친목회 단톡방에 업로드!</p>
+                            </div>
+                            
+                            <div class="bg-[#FFF5F3] p-3 rounded-xl border border-orange-100">
+                                <p class="font-bold text-seoul-red mb-1 flex items-center"><i class="fa-solid fa-triangle-exclamation text-seoul-red mr-1.5 w-3 text-center"></i>주의 사항</p>
+                                <p class="text-gray-700 leading-relaxed ml-4">같은 장소에서 <strong>인물만 바꿔서 똑같이 찍는 사진은 무효!</strong> 조별로 톡톡 튀는 다양한 구도와 센스를 발휘해 주세요.</p>
+                            </div>
+                            
+                            <div class="bg-blue-50/50 p-3 rounded-xl border border-blue-50">
+                                <p class="font-bold text-blue-700 mb-1 flex items-center"><i class="fa-solid fa-award text-amber-500 mr-1.5 w-3 text-center"></i>상품 안내</p>
+                                <p class="text-gray-600 leading-relaxed ml-4">가장 센스 있고 빠르게 인증을 완료해 주신 선생님들께 <strong>시원한 기프티콘</strong>을 선물로 쏩니다! ☕️</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
  
@@ -109,7 +135,7 @@
                         <div class="w-12 h-12 rounded-full bg-[#F0F7F3] text-seoul-green flex items-center justify-center text-xl mr-4"><i class="fa-solid fa-circle-info"></i></div>
                         <div class="text-left">
                             <h3 class="text-base font-bold text-seoul-charcoal">상세 안내</h3>
-                            <p class="text-[11px] text-gray-500 mt-0.5">집결/출발 시간, 숙소 가는 길, 비상 연락망</p>
+                            <p class="text-[11px] text-gray-500 mt-0.5">집결/출발 시간, 비상 연락망 등</p>
                         </div>
                     </div>
                     <i class="fa-solid fa-chevron-right text-gray-300"></i>
@@ -132,13 +158,11 @@
                         <div class="w-12 h-12 rounded-full bg-orange-50 text-orange-500 flex items-center justify-center text-xl mr-4"><i class="fa-solid fa-users"></i></div>
                         <div class="text-left">
                             <h3 class="text-base font-bold text-seoul-charcoal">그룹 활동</h3>
-                            <p class="text-[11px] text-gray-500 mt-0.5">자유 활동 그룹 및 팀장 안내</p>
+                            <p class="text-[11px] text-gray-500 mt-0.5">자유 활동 그룹 안내</p>
                         </div>
                     </div>
                     <i class="fa-solid fa-chevron-right text-gray-300"></i>
                 </button>
-
-                
 
                 <button onclick="switchTab('accom')" class="w-full bg-white p-4 rounded-2xl shadow-sm border border-seoul-line flex items-center justify-between active:scale-[0.98] transition-transform">
                     <div class="flex items-center">
@@ -220,17 +244,17 @@
                                         <button onclick="scrollSlider('slider-liar', 1)" class="absolute right-1 top-1/2 -translate-y-1/2 bg-black/50 text-white w-7 h-7 flex items-center justify-center rounded-full z-10 shadow-md backdrop-blur-sm active:bg-black/70 transition-colors"><i class="fa-solid fa-chevron-right text-xs pl-0.5"></i></button>
 
                                         <div id="slider-liar" class="flex overflow-x-auto snap-x snap-mandatory gap-2 pb-1 hide-scrollbar scroll-smooth rounded-lg">
-                                            <div class="gallery-item flex-none w-[85%] snap-center relative rounded-lg overflow-hidden bg-white border border-gray-200 shadow-sm cursor-pointer" data-title="국민연극 라이어 포스터" onclick="openModal(this)">
-                                                <img src="https://placehold.co/600x800/E25540/ffffff?text=1.+포스터" class="w-full h-40 object-cover pointer-events-none">
+                                            <div class="gallery-item flex-none w-[85%] snap-center relative rounded-lg overflow-hidden bg-white border border-gray-200 shadow-sm cursor-pointer" data-title="라이어 포스터" onclick="openModal(this)">
+                                                <img src="drama_1.png" class="w-full h-40 object-cover pointer-events-none">
                                             </div>
                                             <div class="gallery-item flex-none w-[85%] snap-center relative rounded-lg overflow-hidden bg-white border border-gray-200 shadow-sm cursor-pointer" data-title="상명아트홀 약도" onclick="openModal(this)">
-                                                <img src="https://placehold.co/800x600/F8F6F0/333333?text=2.+약도" class="w-full h-40 object-cover pointer-events-none">
+                                                <img src="drama_2.png" class="w-full h-40 object-cover pointer-events-none">
                                             </div>
                                             <div class="gallery-item flex-none w-[85%] snap-center relative rounded-lg overflow-hidden bg-white border border-gray-200 shadow-sm cursor-pointer" data-title="공연 시놉시스" onclick="openModal(this)">
-                                                <img src="https://placehold.co/800x600/2A5C41/ffffff?text=3.+시놉시스" class="w-full h-40 object-cover pointer-events-none">
+                                                <img src="drama_3.png" class="w-full h-40 object-cover pointer-events-none">
                                             </div>
                                             <div class="gallery-item flex-none w-[85%] snap-center relative rounded-lg overflow-hidden bg-white border border-gray-200 shadow-sm cursor-pointer" data-title="무대 사진" onclick="openModal(this)">
-                                                <img src="https://placehold.co/800x600/EAE5DF/333333?text=4.+무대+사진" class="w-full h-40 object-cover pointer-events-none">
+                                                <img src="drama_4.png" class="w-full h-40 object-cover pointer-events-none">
                                             </div>
                                         </div>
                                     </div>
@@ -271,13 +295,13 @@
 
                                         <div id="slider-dinner" class="flex overflow-x-auto snap-x snap-mandatory gap-2 pb-1 hide-scrollbar scroll-smooth rounded-lg">
                                             <div class="gallery-item flex-none w-[85%] snap-center relative rounded-lg overflow-hidden bg-white border border-gray-200 shadow-sm cursor-pointer" data-title="남포면옥 외관" onclick="openModal(this)">
-                                                <img src="https://placehold.co/800x600/E25540/ffffff?text=1.+식당+외관" class="w-full h-40 object-cover pointer-events-none">
+                                                <img src="food_1.png" class="w-full h-40 object-cover pointer-events-none">
                                             </div>
                                             <div class="gallery-item flex-none w-[85%] snap-center relative rounded-lg overflow-hidden bg-white border border-gray-200 shadow-sm cursor-pointer" data-title="어복쟁반" onclick="openModal(this)">
-                                                <img src="https://placehold.co/800x600/2A5C41/ffffff?text=2.+어복쟁반" class="w-full h-40 object-cover pointer-events-none">
+                                                <img src="food_2.png" class="w-full h-40 object-cover pointer-events-none">
                                             </div>
                                             <div class="gallery-item flex-none w-[85%] snap-center relative rounded-lg overflow-hidden bg-white border border-gray-200 shadow-sm cursor-pointer" data-title="식당 내부" onclick="openModal(this)">
-                                                <img src="https://placehold.co/800x600/F8F6F0/333333?text=3.+식당+내부" class="w-full h-40 object-cover pointer-events-none">
+                                                <img src="food_3.png" class="w-full h-40 object-cover pointer-events-none">
                                             </div>
                                         </div>
                                     </div>
@@ -337,7 +361,7 @@
                         <button class="accordion-btn w-full text-left bg-white p-4 rounded-xl shadow-sm border border-seoul-line active:scale-[0.99] transition-transform" onclick="toggleAccordion(this)">
                             <div class="flex justify-between items-start">
                                 <div>
-                                    <span class="text-[11px] font-bold text-seoul-green block mb-1 tracking-wide">07:00 - 09:30</span>
+                                    <span class="text-[11px] font-bold text-seoul-green block mb-1 tracking-wide">07:00 - 09:00</span>
                                     <h4 class="text-[15px] font-bold text-seoul-charcoal">아침 식사</h4>
                                 </div>
                                 <i class="fa-solid fa-chevron-down text-gray-300 mt-1 icon-rotate"></i>
@@ -363,7 +387,7 @@
                         <button class="accordion-btn w-full text-left bg-white p-4 rounded-xl shadow-sm border border-seoul-line active:scale-[0.99] transition-transform" onclick="toggleAccordion(this)">
                             <div class="flex justify-between items-start">
                                 <div>
-                                    <span class="text-[11px] font-bold text-seoul-green block mb-1 tracking-wide">09:30 - 13:00</span>
+                                    <span class="text-[11px] font-bold text-seoul-green block mb-1 tracking-wide">09:00 - 13:00</span>
                                     <h4 class="text-[15px] font-bold text-seoul-charcoal">오전 선택 코스 (자유 탐방)</h4>
                                 </div>
                                 <i class="fa-solid fa-chevron-down text-gray-300 mt-1 icon-rotate"></i>
@@ -380,10 +404,11 @@
 
                                 <!-- A팀 -->
                                 <div class="bg-white p-3.5 rounded-xl border border-gray-200 shadow-sm mt-3">
-                                    <h5 class="font-bold text-[14px] text-blue-600 mb-2.5 flex items-center"><i class="fa-solid fa-robot mr-1.5"></i>A팀: 창동 과학관 투어</h5>
+                                    <h5 class="font-bold text-[14px] text-blue-600 mb-2.5 flex items-center"><i class="fa-solid fa-robot mr-1.5"></i>로봇 인공지능 과학관 투어</h5>
                                     <div class="text-xs text-gray-700 space-y-2 ml-1">
-                                        <p class="flex items-center"><i class="fa-solid fa-flag text-blue-500 w-4 text-center mr-1"></i><strong>동행 리더:</strong> 신보라 선생님 <span class="bg-blue-50 text-blue-700 px-1.5 py-0.5 rounded border border-blue-100 ml-1.5 font-bold text-[10px]">이동비 전액 지원!</span></p>
-                                        <div class="bg-gray-50 p-2.5 rounded-lg border border-gray-100 relative overflow-hidden">
+                                        <p class="flex items-center"><i class="fa-solid fa-flag text-blue-500 w-4 text-center mr-1"></i><strong>리더:</strong> 신보라 선생님</p>
+                                        <p class="flex items-start"><i class="fa-solid fa-bus text-blue-500 w-4 text-center mr-1 mt-0.5"></i><span class="leading-relaxed"><strong>이동 안내:</strong> 09:00 호텔 앞에서 버스 탑승 및 출발<br><span class="inline-block mt-1 bg-blue-50 text-blue-700 px-1.5 py-0.5 rounded border border-blue-100 font-bold text-[11px]"><i class="fa-solid fa-taxi mr-1"></i>복귀 시 택시비 전액 지원</span></span></p>
+                                        <div class="bg-gray-50 p-2.5 rounded-lg border border-gray-100 relative overflow-hidden mt-1">
                                             <div class="absolute -right-2 -bottom-2 text-blue-100 opacity-50"><i class="fa-solid fa-gift text-4xl"></i></div>
                                             <p class="font-bold text-blue-800 mb-1.5 relative z-10">🎁 선착순 8명 스페셜 예약 혜택</p>
                                             <p class="text-gray-600 relative z-10 leading-snug">- 전문 도슨트 투어 (5명)<br>- 기획 전시 관람 (3명)</p>
@@ -396,7 +421,7 @@
                                 <div class="bg-white p-3.5 rounded-xl border border-gray-200 shadow-sm">
                                     <h5 class="font-bold text-[14px] text-seoul-green mb-2.5 flex items-center"><i class="fa-solid fa-building mr-1.5"></i>B팀: DDP 투어</h5>
                                     <div class="text-xs text-gray-700 space-y-1.5 ml-1">
-                                        <p class="flex items-start"><i class="fa-solid fa-ticket text-seoul-green w-4 text-center mt-0.5 mr-1"></i> <span><strong>전시명:</strong> 《기술이 사람을 만날 때: 연결은 마음을 향한다》 </span></p>
+                                        <p class="flex items-start"><i class="fa-solid fa-ticket text-seoul-green w-4 text-center mt-0.5 mr-1"></i> <span><strong>전시명:</strong> 기술이 사람을 만날 때: 연결은 마음을 향한다 </span></p>
                                         <p class="text-gray-500 mt-1 pl-5 leading-relaxed">첨단 기술과 따뜻한 인간 감성이 만나는 혁신적인 디지털 체험전</p>
                                     </div>
                                 </div>
@@ -447,7 +472,7 @@
         </section>
 
         <!-- ========================================== -->
-        <!-- 3. 그룹 안내 화면 (새로 추가됨) -->
+        <!-- 3. 그룹 안내 화면 -->
         <!-- ========================================== -->
         <section id="view-group" class="page-view">
             <div class="bg-white p-4 sticky top-0 z-20 border-b border-seoul-line shadow-sm flex items-center justify-center">
@@ -460,44 +485,61 @@
                 <!-- A Group -->
                 <div class="bg-white p-5 rounded-2xl shadow-sm border border-seoul-line">
                     <div class="flex items-center justify-between mb-3 border-b border-gray-100 pb-3">
-                        <h3 class="font-bold text-seoul-red text-[16px]"><i class="fa-solid fa-users mr-2 opacity-80"></i>창동 과학관 투어</h3>
-                        <span class="bg-[#FFF5F3] text-seoul-red text-[11px] font-bold px-2.5 py-1 rounded-full border border-orange-100 shadow-sm"><i class="fa-solid fa-crown mr-1 text-amber-500"></i>팀장: <span id="group-a-leader">이름입력</span></span>
+                        <h3 class="font-bold text-seoul-red text-[16px]"><i class="fa-solid fa-users mr-2 opacity-80"></i>로봇 인공지능 과학관 투어</h3>
+                        <span class="bg-[#FFF5F3] text-seoul-red text-[11px] font-bold px-2.5 py-1 rounded-full border border-orange-100 shadow-sm"><i class="fa-solid fa-crown mr-1 text-amber-500"></i>신보라</span>
                     </div>
                     <div class="bg-gray-50 p-3 rounded-xl border border-gray-200 mb-3 text-[12px] space-y-1.5">
                         <p class="flex items-start text-gray-700"><i class="fa-solid fa-location-dot mt-[3px] w-4 text-seoul-red text-center mr-1.5"></i> <span class="font-bold mr-1">장소:</span>서울 로봇 인공지능 과학관(창동)</p>
                     </div>
-                    <p id="group-a-members" class="text-[13px] text-seoul-charcoal leading-relaxed whitespace-pre-wrap">팀원 정보를 입력해주세요.</p>
+                    <!-- 명단 리스트 및 입력창 -->
+                    <div id="list-A팀" class="flex flex-wrap gap-2 mb-3 empty:hidden"></div>
+                    <div class="flex gap-2">
+                        <input type="text" id="input-A팀" class="flex-1 border border-gray-200 rounded-lg px-3 py-2 text-[13px] outline-none focus:border-seoul-red transition-colors bg-gray-50" placeholder="본인 이름 입력 (예: 홍길동)">
+                        <button onclick="addParticipant('A팀')" class="bg-seoul-red text-white px-4 py-2 rounded-lg text-[13px] font-bold active:scale-95 transition-transform whitespace-nowrap shadow-sm">추가</button>
+                    </div>
                 </div>
 
                 <!-- B Group -->
                 <div class="bg-white p-5 rounded-2xl shadow-sm border border-seoul-line">
                     <div class="flex items-center justify-between mb-3 border-b border-gray-100 pb-3">
                         <h3 class="font-bold text-seoul-green text-[16px]"><i class="fa-solid fa-users mr-2 opacity-80"></i>DDP 투어</h3>
-                        <span class="bg-[#F0F7F3] text-seoul-green text-[11px] font-bold px-2.5 py-1 rounded-full border border-emerald-100 shadow-sm"><i class="fa-solid fa-crown mr-1 text-amber-500"></i>팀장: <span id="group-b-leader">이름입력</span></span>
                     </div>
                     <div class="bg-gray-50 p-3 rounded-xl border border-gray-200 mb-3 text-[12px] space-y-1.5">
                         <p class="flex items-start text-gray-700"><i class="fa-solid fa-location-dot mt-[3px] w-4 text-seoul-green text-center mr-1.5"></i> <span class="font-bold mr-1">장소:</span>DDP 배움터 1층 DDP 쇼룸</p>
-                        <p class="flex items-start text-gray-700"><i class="fa-solid fa-ticket mt-[3px] w-4 text-seoul-green text-center mr-1.5"></i> <span class="font-bold mr-1">전시명:</span>&lt;기술이 사람을 만날 때: 연결은 마음을 향한다&gt;</p>
+                        <p class="flex items-start text-gray-700"><i class="fa-solid fa-ticket mt-[3px] w-4 text-seoul-green text-center mr-1.5"></i> <span class="font-bold mr-1">전시명:</span>기술이 사람을 만날 때: 연결은 마음을 향한다</p>
                     </div>
-                    <p id="group-b-members" class="text-[13px] text-seoul-charcoal leading-relaxed whitespace-pre-wrap">팀원 정보를 입력해주세요.</p>
+                    <!-- 명단 리스트 및 입력창 -->
+                    <div id="list-B팀" class="flex flex-wrap gap-2 mb-3 empty:hidden"></div>
+                    <div class="flex gap-2">
+                        <input type="text" id="input-B팀" class="flex-1 border border-gray-200 rounded-lg px-3 py-2 text-[13px] outline-none focus:border-seoul-green transition-colors bg-gray-50" placeholder="본인 이름 입력">
+                        <button onclick="addParticipant('B팀')" class="bg-seoul-green text-white px-4 py-2 rounded-lg text-[13px] font-bold active:scale-95 transition-transform whitespace-nowrap shadow-sm">추가</button>
+                    </div>
                 </div>
 
                 <!-- C Group -->
                 <div class="bg-white p-5 rounded-2xl shadow-sm border border-seoul-line">
                     <div class="flex items-center justify-between mb-3 border-b border-gray-100 pb-3">
-                        <h3 class="font-bold text-amber-600 text-[16px]"><i class="fa-solid fa-users mr-2 opacity-80"></i>C 그룹</h3>
-                        <span class="bg-amber-50 text-amber-600 text-[11px] font-bold px-2.5 py-1 rounded-full border border-amber-100 shadow-sm"><i class="fa-solid fa-crown mr-1 text-amber-500"></i>팀장: <span id="group-c-leader">이름입력</span></span>
+                        <h3 class="font-bold text-amber-600 text-[16px]"><i class="fa-solid fa-users mr-2 opacity-80"></i>자유 투어: 호텔 버스 탑승</h3>
                     </div>
-                    <p id="group-c-members" class="text-[13px] text-seoul-charcoal leading-relaxed whitespace-pre-wrap">팀원 정보를 입력해주세요.</p>
+                    <!-- 명단 리스트 및 입력창 -->
+                    <div id="list-C그룹" class="flex flex-wrap gap-2 mb-3 empty:hidden"></div>
+                    <div class="flex gap-2">
+                        <input type="text" id="input-C그룹" class="flex-1 border border-gray-200 rounded-lg px-3 py-2 text-[13px] outline-none focus:border-amber-500 transition-colors bg-gray-50" placeholder="본인 이름 입력">
+                        <button onclick="addParticipant('C그룹')" class="bg-amber-500 text-white px-4 py-2 rounded-lg text-[13px] font-bold active:scale-95 transition-transform whitespace-nowrap shadow-sm">추가</button>
+                    </div>
                 </div>
 
                 <!-- D Group -->
                 <div class="bg-white p-5 rounded-2xl shadow-sm border border-seoul-line">
                     <div class="flex items-center justify-between mb-3 border-b border-gray-100 pb-3">
-                        <h3 class="font-bold text-blue-600 text-[16px]"><i class="fa-solid fa-users mr-2 opacity-80"></i>D 그룹</h3>
-                        <span class="bg-blue-50 text-blue-600 text-[11px] font-bold px-2.5 py-1 rounded-full border border-blue-100 shadow-sm"><i class="fa-solid fa-crown mr-1 text-amber-500"></i>팀장: <span id="group-d-leader">이름입력</span></span>
+                        <h3 class="font-bold text-blue-600 text-[16px]"><i class="fa-solid fa-users mr-2 opacity-80"></i>자유 투어: DDP 버스 탑승</h3>
                     </div>
-                    <p id="group-d-members" class="text-[13px] text-seoul-charcoal leading-relaxed whitespace-pre-wrap">팀원 정보를 입력해주세요.</p>
+                    <!-- 명단 리스트 및 입력창 -->
+                    <div id="list-D그룹" class="flex flex-wrap gap-2 mb-3 empty:hidden"></div>
+                    <div class="flex gap-2">
+                        <input type="text" id="input-D그룹" class="flex-1 border border-gray-200 rounded-lg px-3 py-2 text-[13px] outline-none focus:border-blue-500 transition-colors bg-gray-50" placeholder="본인 이름 입력">
+                        <button onclick="addParticipant('D그룹')" class="bg-blue-500 text-white px-4 py-2 rounded-lg text-[13px] font-bold active:scale-95 transition-transform whitespace-nowrap shadow-sm">추가</button>
+                    </div>
                 </div>
             </div>
         </section>
@@ -525,7 +567,7 @@
                         <div class="text-center">
                             <p class="text-xs font-bold text-seoul-green mb-1 bg-white border border-emerald-100 inline-block px-2 py-0.5 rounded-full">서울 ➡️ 대전</p>
                             <p class="text-[14px] font-bold text-seoul-charcoal">7월 4일(토) 오후 <span class="text-seoul-green text-lg">14:00</span> 출발</p>
-                            <p class="text-[13px] font-bold text-seoul-charcoal mt-1.5 bg-[#F0F7F3] inline-block px-3 py-1 rounded-lg border border-emerald-100"><i class="fa-solid fa-location-dot text-seoul-green mr-1.5"></i>DDP 어울림광장</p>
+                            <p class="text-[13px] font-bold text-seoul-charcoal mt-1.5 bg-[#F0F7F3] inline-block px-3 py-1 rounded-lg border border-emerald-100"><i class="fa-solid fa-location-dot text-seoul-green mr-1.5"></i>DDP</p>
                         </div>
                     </div>
                     <ul class="text-[13px] text-gray-600 list-disc ml-5">
@@ -533,55 +575,34 @@
                     </ul>
                 </div>
 
-                <!-- [필독] 수하물 보관 및 최종 집결 시간 안내 -->
-                <div class="bg-white p-5 rounded-2xl shadow-sm border-2 border-seoul-red/30 relative overflow-hidden">
-                    <div class="absolute top-0 right-0 w-16 h-16 bg-red-50 rounded-bl-[100%] -z-10"></div>
-                    <h3 class="font-bold text-seoul-red mb-3 flex items-center text-[15px] tracking-tight">
-                        <i class="fa-solid fa-bullhorn mr-2 animate-pulse"></i>[필독] 수하물 및 최종 집결
+                <!-- 수하물 보관 및 최종 집결 시간 안내 -->
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-seoul-line">
+                    <h3 class="font-bold text-seoul-charcoal mb-3 flex items-center text-[15px]">
+                        <i class="fa-solid fa-suitcase-rolling text-blue-500 mr-2"></i>[필독] 수하물 보관 및 집결
                     </h3>
-                    <p class="text-[12px] text-gray-600 mb-5 leading-relaxed bg-gray-50 p-2.5 rounded-lg border border-gray-100 shadow-inner">
-                        마지막 날 대전으로 출발하기 전, 매끄러운 짐 처리와 단체 사진 촬영을 위해 다음 시간을 <strong>반드시 지켜주시기 바랍니다.</strong>
-                    </p>
+                    <p class="text-xs text-gray-600 mb-4 leading-relaxed">매끄러운 짐 처리와 단체 사진 촬영을 위해 다음 시간을 반드시 지켜주시기 바랍니다.</p>
                     
-                    <div class="relative pl-5 border-l-2 border-seoul-line space-y-6 py-1 ml-2">
-                        <!-- 13:00 -->
+                    <div class="relative pl-4 border-l-2 border-blue-200 space-y-5 py-2 ml-2">
                         <div class="relative">
-                            <div class="absolute -left-[29px] top-0.5 bg-seoul-charcoal text-white w-6 h-6 rounded-full flex items-center justify-center text-[11px] shadow-sm"><i class="fa-solid fa-hotel text-[10px]"></i></div>
-                            <p class="font-bold text-seoul-charcoal text-[14px]">13:00 <span class="text-seoul-charcoal ml-1 font-bold">호텔 로비 1차 집결</span></p>
-                            <div class="text-gray-600 text-[12px] mt-1.5 space-y-1.5">
-                                <p class="flex items-start leading-snug"><i class="fa-solid fa-check text-seoul-red mt-0.5 mr-1.5 text-[10px]"></i>오전 활동 동안 무거운 짐을 호텔에 맡겨두고 개인 활동을 다녀오신 선생님 대상</p>
-                                <p class="flex items-start text-gray-500"><i class="fa-solid fa-bus mt-1 mr-1.5 text-[10px]"></i>버스타고 DDP로 이동 예정</p>
-                                
-                                <div class="bg-[#FFF5F3] p-2.5 rounded-xl border border-orange-100 mt-2 shadow-sm relative overflow-hidden">
-                                    <div class="absolute -right-2 -bottom-2 opacity-10 text-seoul-red"><i class="fa-solid fa-suitcase text-4xl"></i></div>
-                                    <p class="text-seoul-red font-bold flex items-center mb-1 text-[11.5px]"><i class="fa-solid fa-triangle-exclamation mr-1.5"></i>수하물 확인 필수</p>
-                                    <p class="text-gray-700 text-[11px] leading-relaxed relative z-10">짐을 호텔에 맡기시는 분들은 사전에 <strong>박덕호 선생님</strong>께 본인의 수하물이 <strong>어떤 형태와 종류인지 필히 사전에 귀띔</strong>해 주셔야 합니다.</p>
-                                </div>
+                            <div class="absolute -left-[25px] top-0.5 bg-blue-500 text-white w-5 h-5 rounded flex items-center justify-center text-[11px] font-bold shadow-sm">1</div>
+                            <p class="font-bold text-seoul-charcoal text-[14px] mb-1">13:00 - 호텔 로비 1차 집결</p>
+                            <p class="text-gray-600 text-xs leading-relaxed">호텔에 짐을 맡겨두고 개인 활동을 다녀오신 선생님들은 로비로 모여주세요. (버스타고 DDP 이동 예정)</p>
+                            <div class="mt-2 bg-red-50 p-2 rounded-lg border border-red-100 text-xs text-red-800">
+                                <span class="font-bold">⚠️ 수하물 확인 필수:</span> 짐을 맡기시는 분들은 사전에 <STRONG>박덕호 선생님께</STRONG> 수하물의 형태와 종류를 필히 말씀해 주셔야 합니다.
                             </div>
                         </div>
-                        
-                        <!-- 13:30 -->
                         <div class="relative">
-                            <div class="absolute -left-[29px] top-0.5 bg-seoul-green text-white w-6 h-6 rounded-full flex items-center justify-center text-[11px] shadow-sm"><i class="fa-solid fa-camera text-[10px]"></i></div>
-                            <p class="font-bold text-seoul-green text-[14px]">13:30 <span class="text-seoul-charcoal ml-1 font-bold">DDP 2차 최종 집결 📸</span></p>
-                            <div class="text-gray-600 text-[12px] mt-1.5 space-y-1.5">
-                                <p class="leading-relaxed">개인 수하물을 직접 소지하고 DDP 일대에서 바로 합류하시는 분들을 포함하여, <strong>전 교직원이 최종 집결 및 단체 사진 촬영</strong>을 하는 시간입니다. 한 분도 빠짐없이 모여주세요!</p>
-                                
-                                <div class="bg-[#F0F7F3] p-3 rounded-xl border border-emerald-100 shadow-sm mt-2 relative">
-                                    <p class="text-seoul-green font-bold flex items-center mb-1 text-[11.5px]"><i class="fa-solid fa-location-dot mr-1"></i>정확한 모이는 곳</p>
-                                    <p class="text-seoul-charcoal text-[11px] leading-relaxed">지하철 동대문역사문화공원역 1번 출구 앞<br>
-                                        <span class="bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded mr-1">지하 2층 어울림광장</span><br>
-                                        <span class="text-gray-500">(초대형 지붕/캔틸레버 아래 그늘)</span>
-                                    </p>
-                                </div>
+                            <div class="absolute -left-[25px] top-0.5 bg-blue-500 text-white w-5 h-5 rounded flex items-center justify-center text-[11px] font-bold shadow-sm">2</div>
+                            <p class="font-bold text-seoul-charcoal text-[14px] mb-1">13:30 - DDP 2차 최종 집결 📸</p>
+                            <p class="text-gray-600 text-xs leading-relaxed">DDP에서 합류하시는 분들을 포함하여 <strong>전 교직원 최종 집결 시간</strong>입니다. 단체 사진 촬영이 있으니 늦지 않게 꼭 모여주세요!</p>
+                            <div class="mt-2 bg-gray-50 p-2 rounded-lg border border-gray-200 text-xs text-gray-700 font-medium">
+                                <i class="fa-solid fa-location-dot text-seoul-red mr-1"></i> <strong>집결 장소:</strong> 지하 2층 어울림광장(지하철 동대문역사문화공원역 1번 출구 앞 거대한 지붕 그늘 아래)
                             </div>
                         </div>
-                        
-                        <!-- 14:00 -->
                         <div class="relative">
-                            <div class="absolute -left-[29px] top-0.5 bg-seoul-red text-white w-6 h-6 rounded-full flex items-center justify-center text-[11px] shadow-sm"><i class="fa-solid fa-bus text-[10px]"></i></div>
-                            <p class="font-bold text-seoul-red text-[14px]">14:00 <span class="text-gray-700 ml-1 font-bold">대전으로 출발</span></p>
-                            <p class="text-gray-500 text-[12px] mt-1 leading-snug">DDP 앞에 대기 중인 버스에 탑승하여 안전하게 대전으로 출발합니다.</p>
+                            <div class="absolute -left-[25px] top-0.5 bg-blue-500 text-white w-5 h-5 rounded flex items-center justify-center text-[11px] font-bold shadow-sm">3</div>
+                            <p class="font-bold text-seoul-charcoal text-[14px] mb-1">14:00 - 대전 출발</p>
+                            <p class="text-gray-600 text-xs">DDP 앞에 대기 중인 버스에 탑승하여 대전으로 출발합니다.</p>
                         </div>
                     </div>
                 </div>
@@ -619,7 +640,7 @@
         </section>
 
         <!-- ========================================== -->
-        <!-- 4. 숙소 안내 화면 -->
+        <!-- 5. 숙소 안내 화면 -->
         <!-- ========================================== -->
         <section id="view-accom" class="page-view">
             <div class="bg-white p-4 sticky top-0 z-20 border-b border-seoul-line shadow-sm flex items-center justify-center">
@@ -782,7 +803,7 @@
             </div>
         </section>
 
-        <!-- 푸터 (Footer) 추가 -->
+        <!-- 푸터 (Footer) -->
         <footer class="pt-6 pb-8 px-6 text-center">
             <div class="inline-block border-t border-seoul-line pt-5 w-[80%] mx-auto">
                 <p class="text-[11px] font-bold text-gray-500 tracking-wide mb-1">
@@ -796,7 +817,7 @@
 
     </div>
 
-    <!-- 하단에 딱 붙는 안정적인 네비게이션 탭 바 (그룹 탭 추가됨) -->
+    <!-- 하단에 딱 붙는 안정적인 네비게이션 탭 바 -->
     <nav class="bg-white border-t border-gray-200 fixed bottom-0 left-0 right-0 w-full z-50 px-1 pb-safe shadow-[0_-4px_10px_-1px_rgba(0,0,0,0.05)]">
         <div class="max-w-md mx-auto flex justify-between">
             <button onclick="switchTab('home')" id="tab-home" class="nav-btn active flex-1 py-3 flex flex-col items-center justify-center text-seoul-red transition-colors"><i class="fa-solid fa-house text-[1.1rem] mb-1"></i><span class="text-[9px] font-bold">홈</span></button>
@@ -843,22 +864,34 @@
     <script>
         // 탭 전환 및 스크롤 최상단 이동
         function switchTab(tabName) {
+            const targetView = document.getElementById('view-' + tabName);
+            if (!targetView) {
+                console.warn("해당 화면을 찾을 수 없습니다: view-" + tabName);
+                return; // 에러 방지(null 체크)
+            }
+
             document.querySelectorAll('.page-view').forEach(v => v.classList.remove('active'));
-            document.getElementById('view-' + tabName).classList.add('active');
+            targetView.classList.add('active');
             
             document.querySelectorAll('.nav-btn').forEach(btn => {
                 btn.classList.remove('text-seoul-red');
                 btn.classList.add('text-gray-400');
-                btn.querySelector('span').classList.remove('font-bold');
-                btn.querySelector('span').classList.add('font-medium');
+                const span = btn.querySelector('span');
+                if (span) {
+                    span.classList.remove('font-bold');
+                    span.classList.add('font-medium');
+                }
             });
             
             const activeTab = document.getElementById('tab-' + tabName);
-            if(activeTab) {
+            if (activeTab) {
                 activeTab.classList.remove('text-gray-400');
-                activeTab.classList.add('text-seoul-red'); // 활성화 탭 테라코타 컬러 적용
-                activeTab.querySelector('span').classList.remove('font-medium');
-                activeTab.querySelector('span').classList.add('font-bold');
+                activeTab.classList.add('text-seoul-red');
+                const span = activeTab.querySelector('span');
+                if (span) {
+                    span.classList.remove('font-medium');
+                    span.classList.add('font-bold');
+                }
             }
             
             window.scrollTo({ top: 0, behavior: 'auto' });
@@ -997,10 +1030,10 @@
     <!-- 클라우드 데이터 실시간 동기화 스크립트 -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, onSnapshot, collection, addDoc, query, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // ⚠️주의: 깃허브 배포 시 아래 빈칸에 선생님의 파이어베이스 설정값을 붙여넣어야 합니다!
+        // 파이어베이스 설정값
         const firebaseConfig = {
             apiKey: "AIzaSyBpB10wDN8yfdCHKa3uSWKo03TQVF6BGaI",
             authDomain: "retreat-2026-ce30d.firebaseapp.com",
@@ -1009,41 +1042,39 @@
             messagingSenderId: "465178932210",
             appId: "1:465178932210:web:bf26dffacdf6666144b16b"
         };
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'beopdong-retreat-2026';
 
         let app, auth, db;
         try {
-            if (Object.keys(firebaseConfig).length > 0) {
-                app = initializeApp(firebaseConfig);
-                auth = getAuth(app);
-                db = getFirestore(app);
-                
-                const initAuth = async () => {
-                    try {
-                        if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                            await signInWithCustomToken(auth, __initial_auth_token);
-                        } else { 
-                            await signInAnonymously(auth); 
-                        }
-                        listenForUpdates();
-                    } catch (e) { console.warn("인증 실패:", e); }
-                };
-                initAuth();
-            }
-        } catch(e) { console.warn("Firebase 연결 안됨"); }
+            app = initializeApp(firebaseConfig);
+            auth = getAuth(app);
+            db = getFirestore(app);
+            
+            // 앱 실행 시 자동으로 익명 로그인 처리
+            signInAnonymously(auth).catch((error) => {
+                console.error("인증 실패:", error);
+            });
+
+            // 인증이 완료된 후에만 데이터를 불러오도록 설정
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    listenForUpdates();
+                    listenForParticipants();
+                }
+            });
+        } catch(e) { 
+            console.error("Firebase 연결 안됨:", e); 
+        }
 
         function listenForUpdates() {
             if (!db) return;
-            const settingsRef = doc(db, 'artifacts', appId, 'public', 'data', 'retreat_data', 'settings');
+            const settingsRef = doc(db, 'settings', 'notice');
             
             onSnapshot(settingsRef, (snapshot) => {
                 if (snapshot.exists()) {
                     const data = snapshot.data();
-                    
-                    // 1. 공지사항 팝업 연동
-                    if (data.popup && data.popup.isActive) {
+                    if (data.isActive) {
                         const noticeModal = document.getElementById('notice-modal');
-                        document.getElementById('notice-text').innerText = data.popup.message;
+                        document.getElementById('notice-text').innerText = data.message;
                         noticeModal.classList.remove('hidden');
                         setTimeout(() => {
                             noticeModal.classList.remove('opacity-0');
@@ -1052,23 +1083,91 @@
                     } else {
                         closeNotice();
                     }
-
-                    // 2. 그룹 정보 연동
-                    if (data.groups) {
-                        ['A', 'B', 'C', 'D'].forEach(group => {
-                            if (data.groups[group]) {
-                                const leaderEl = document.getElementById(`group-${group.toLowerCase()}-leader`);
-                                const membersEl = document.getElementById(`group-${group.toLowerCase()}-members`);
-                                if(leaderEl) leaderEl.innerText = data.groups[group].leader || '이름입력';
-                                if(membersEl) membersEl.innerText = data.groups[group].members || '팀원 정보를 입력해주세요.';
-                            }
-                        });
-                    }
                 }
             }, (error) => {
-                console.warn("데이터 가져오기 에러:", error);
+                console.warn("설정 데이터 가져오기 에러:", error);
             });
         }
+
+        // --- 그룹 참가자 실시간 관리 기능 ---
+        function listenForParticipants() {
+            if (!db) return;
+            const teams = ['A팀', 'B팀', 'C그룹', 'D그룹'];
+            const q = query(collection(db, 'participants'));
+            
+            onSnapshot(q, (snapshot) => {
+                // 기존 목록 초기화
+                teams.forEach(team => {
+                    const el = document.getElementById(`list-${team}`);
+                    if (el) el.innerHTML = '';
+                });
+
+                // 받아온 데이터 화면에 렌더링
+                snapshot.forEach(docSnap => {
+                    const data = docSnap.data();
+                    const teamEl = document.getElementById(`list-${data.team}`);
+                    if (teamEl) {
+                        const badge = document.createElement('div');
+                        badge.className = 'inline-flex items-center bg-white border border-gray-200 rounded-full px-2.5 py-1 text-[12px] shadow-sm mb-1';
+                        
+                        // 현재 로그인한 사용자가 작성한 이름인지 확인
+                        const isOwner = auth.currentUser && data.userId === auth.currentUser.uid;
+                        const deleteBtn = isOwner ? `<button onclick="deleteParticipant('${docSnap.id}')" class="text-gray-400 hover:text-red-500 w-4 h-4 flex items-center justify-center rounded-full bg-gray-50 active:bg-gray-100 transition-colors"><i class="fa-solid fa-xmark text-[10px]"></i></button>` : '';
+
+                        badge.innerHTML = `
+                            <span class="font-bold text-seoul-charcoal ${isOwner ? 'mr-1.5' : ''}">${data.name}</span>
+                            ${deleteBtn}
+                        `;
+                        teamEl.appendChild(badge);
+                    }
+                });
+            }, (error) => {
+                console.warn("참가자 명단 로드 오류:", error);
+            });
+        }
+
+        // 이름 추가하기 (버튼 클릭 시 실행)
+        window.addParticipant = async (team) => {
+            const input = document.getElementById(`input-${team}`);
+            if (!input || !input.value.trim()) {
+                alert("이름을 입력해주세요.");
+                return;
+            }
+            if (!auth.currentUser) {
+                alert("서버에 연결 중입니다. 잠시 후 다시 시도해주세요.");
+                return;
+            }
+            
+            const name = input.value.trim();
+            input.value = ''; // 입력창 즉시 비우기
+            
+            try {
+                await addDoc(collection(db, 'participants'), {
+                    team: team,
+                    name: name,
+                    timestamp: Date.now(),
+                    userId: auth.currentUser.uid
+                });
+            } catch(e) {
+                console.error("추가 실패:", e);
+                if (e.code === 'permission-denied') {
+                    alert("⚠️ 파이어베이스 데이터베이스 쓰기 권한이 막혀있습니다!\n파이어베이스 콘솔 -> Firestore Database -> 'Rules(규칙)' 탭에서\nallow read, write: if true; 로 변경해주세요.");
+                } else {
+                    alert("명단 추가에 실패했습니다.");
+                }
+            }
+        };
+
+        // 이름 삭제하기
+        window.deleteParticipant = async (id) => {
+            if(!auth.currentUser) return;
+            try {
+                await deleteDoc(doc(db, 'participants', id));
+            } catch(e) {
+                console.error("삭제 실패:", e);
+                alert("삭제에 실패했습니다.");
+            }
+        };
     </script>
 </body>
 </html>
