@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>2026학년도 교사 연찬회</title>
+    
+    <!-- 모바일 홈 화면 추가 시 나타날 아이콘 설정 -->
+    <!-- 깃허브에 이 html 파일과 같은 위치에 'icon.png' 파일을 꼭 함께 올려주세요! -->
+    <link rel="apple-touch-icon" sizes="180x180" href="./icon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="./icon.png">
+    <link rel="shortcut icon" href="./icon.png">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Noto Sans KR', 'sans-serif'],
+                    },
+                    colors: {
+                        seoul: {
+                            red: '#E25540',     // 테라코타 레드
+                            green: '#2A5C41',   // 남산 딥그린
+                            beige: '#F8F6F0',   // 크림 베이지 배경
+                            charcoal: '#2D2D2D',// 다크 차콜
+                            line: '#EAE5DF'     // 부드러운 테두리
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* 모바일 기본 설정 및 부드러운 스크롤 */
+        html, body { 
+            background-color: #F8F6F0; 
+            color: #2D2D2D; 
+            -webkit-tap-highlight-color: transparent;
+            -webkit-overflow-scrolling: touch;
+            scroll-behavior: smooth;
+        }
+        
+        .page-view { display: none; animation: fadeIn 0.3s ease-in-out; }
+        .page-view.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .accordion-content { max-height: 0; overflow: hidden; transition: all 0.3s ease-out; opacity: 0; }
+        .accordion-content.active { max-height: 1000px; opacity: 1; padding-top: 0.5rem; padding-bottom: 1rem; }
+        .icon-rotate { transition: transform 0.3s ease; }
+        .active-btn .icon-rotate { transform: rotate(180deg); }
+        
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        /* 사진 모달 */
+        #photo-modal {
+            display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%;
+            background-color: rgba(20, 20, 20, 0.95); justify-content: center; align-items: center; flex-direction: column;
+            opacity: 0; transition: opacity 0.3s ease;
+        }
+        #photo-modal.show { display: flex; opacity: 1; }
+        #photo-modal img { max-width: 95%; max-height: 80vh; border-radius: 0.75rem; box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
+    </style>
+</head>
+<body class="antialiased pb-20"> <!-- pb-20: 하단 고정 바 공간 -->
+
+    <div class="content-area">
+        
+        <!-- ========================================== -->
+        <!-- 1. 홈 화면 -->
+        <!-- ========================================== -->
+        <section id="view-home" class="page-view active">
+            <!-- 감성적이면서도 깔끔한 헤더 -->
+            <div class="bg-seoul-red text-white p-8 pt-12 shadow-md rounded-b-[2rem] mb-6 relative overflow-hidden">
+                <div class="absolute -top-10 -right-10 w-40 h-40 bg-white opacity-10 rounded-full blur-2xl"></div>
+                <div class="absolute -bottom-5 -left-5 w-24 h-24 bg-white opacity-10 rounded-full blur-xl"></div>
+                <div class="relative z-10 text-center">
+                    <p class="text-orange-100 text-sm font-medium mb-2 tracking-wider">대전법동중학교</p>
+                    <h1 class="text-[1.25rem] sm:text-2xl font-bold leading-snug mb-4 tracking-tight">2026학년도<br>AI 디지털 선도학교 현장연수</h1>
+                    <div class="inline-flex flex-col items-center bg-black/10 rounded-2xl p-3 shadow-inner w-full max-w-xs mx-auto backdrop-blur-sm border border-white/10">
+                        <span class="text-sm font-medium text-white/95"><i class="fa-regular fa-calendar-days mr-2 w-4"></i>7. 3.(금) ~ 7. 4.(토)</span>
+                        <span class="text-sm font-medium mt-1 text-white/95"><i class="fa-solid fa-location-dot mr-2 w-4"></i>서울 종로 & 대학로 일대</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 직관적인 메인 메뉴 버튼 -->
+            <div class="px-5 mt-6 max-w-md mx-auto space-y-3 pb-4">
+                <p class="text-gray-500 text-sm font-bold ml-2 mb-2">원하시는 메뉴를 선택하세요</p>
+                
+                <button onclick="switchTab('schedule')" class="w-full bg-white p-4 rounded-2xl shadow-sm border border-seoul-line flex items-center justify-between active:scale-[0.98] transition-transform">
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 rounded-full bg-[#FFF5F3] text-seoul-red flex items-center justify-center text-xl mr-4"><i class="fa-regular fa-calendar-check"></i></div>
+                        <div class="text-left">
+                            <h3 class="text-base font-bold text-seoul-charcoal">일정 보기</h3>
+                            <p class="text-[11px] text-gray-500 mt-0.5">1일차/2일차 세부 프로그램 안내</p>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-gray-300"></i>
+                </button>
+
+                <!-- 새로 추가된 그룹 안내 메뉴 버튼 -->
+                <button onclick="switchTab('group')" class="w-full bg-white p-4 rounded-2xl shadow-sm border border-seoul-line flex items-center justify-between active:scale-[0.98] transition-transform">
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 rounded-full bg-orange-50 text-orange-500 flex items-center justify-center text-xl mr-4"><i class="fa-solid fa-users"></i></div>
+                        <div class="text-left">
+                            <h3 class="text-base font-bold text-seoul-charcoal">그룹 안내</h3>
+                            <p class="text-[11px] text-gray-500 mt-0.5">자유 활동 그룹 및 팀장 안내</p>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-gray-300"></i>
+                </button>
+
+                <button onclick="switchTab('detail')" class="w-full bg-white p-4 rounded-2xl shadow-sm border border-seoul-line flex items-center justify-between active:scale-[0.98] transition-transform">
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 rounded-full bg-[#F0F7F3] text-seoul-green flex items-center justify-center text-xl mr-4"><i class="fa-solid fa-circle-info"></i></div>
+                        <div class="text-left">
+                            <h3 class="text-base font-bold text-seoul-charcoal">상세 안내</h3>
+                            <p class="text-[11px] text-gray-500 mt-0.5">집결/출발 시간, 숙소 가는 길, 비상 연락망</p>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-gray-300"></i>
+                </button>
+
+                <button onclick="switchTab('accom')" class="w-full bg-white p-4 rounded-2xl shadow-sm border border-seoul-line flex items-center justify-between active:scale-[0.98] transition-transform">
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 rounded-full bg-gray-100 text-seoul-charcoal flex items-center justify-center text-xl mr-4"><i class="fa-solid fa-bed"></i></div>
+                        <div class="text-left">
+                            <h3 class="text-base font-bold text-seoul-charcoal">숙소 안내</h3>
+                            <p class="text-[11px] text-gray-500 mt-0.5">호텔 기본 정보 및 객실 배정표</p>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-gray-300"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- 2. 일정 보기 화면 -->
+        <!-- ========================================== -->
+        <section id="view-schedule" class="page-view">
+            <div class="bg-white p-4 sticky top-0 z-20 border-b border-seoul-line shadow-sm flex items-center justify-center">
+                <h2 class="text-lg font-bold text-seoul-charcoal">연찬회 일정표</h2>
+            </div>
+            
+            <div class="px-5 py-6 max-w-md mx-auto">
+                <p class="text-xs text-gray-400 mb-6 text-center"><i class="fa-regular fa-hand-pointer mr-1"></i>일정을 터치하면 상세 내용을 볼 수 있습니다.</p>
+
+                <!-- Day 1 -->
+                <div class="mb-8 relative">
+                    <div class="absolute left-4 top-8 bottom-0 w-0.5 bg-orange-200 -z-10"></div>
+                    <h3 class="font-bold text-seoul-red bg-orange-50 border border-orange-100 inline-block px-3 py-1.5 rounded-lg mb-5 text-sm ml-1 shadow-sm">
+                        Day 1 - 7. 3.(금)
+                    </h3>
+
+                    <!-- 일정 1 -->
+                    <div class="relative pl-12 mb-4">
+                        <div class="absolute left-3.5 top-5 w-2.5 h-2.5 rounded-full bg-seoul-red -translate-x-1/2 shadow-[0_0_0_4px_#F8F6F0]"></div>
+                        <button class="accordion-btn w-full text-left bg-white p-4 rounded-xl shadow-sm border border-seoul-line active:scale-[0.99] transition-transform" onclick="toggleAccordion(this)">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <span class="text-[11px] font-bold text-seoul-red block mb-1 tracking-wide">13:00 - 16:00</span>
+                                    <h4 class="text-[15px] font-bold text-seoul-charcoal">학교 ➡️ 서울 이동, 숙소 체크인</h4>
+                                </div>
+                                <i class="fa-solid fa-chevron-down text-gray-300 mt-1 icon-rotate"></i>
+                            </div>
+                        </button>
+                        <div class="accordion-content bg-white rounded-b-xl border-x border-b border-seoul-line -mt-2 pt-2 px-4">
+                            <div class="py-4 border-t border-seoul-line mt-2 text-sm text-gray-600 space-y-2">
+                                <p><i class="fa-solid fa-hotel text-seoul-red w-5 text-center"></i> <strong>장소:</strong> 호텔 아트리움 서울 종로</p>
+                                <p><i class="fa-solid fa-bus text-gray-500 w-5 text-center"></i> 학교에서 버스 탑승 후 서울로 출발</p>
+                                <p><i class="fa-solid fa-check text-seoul-green w-5 text-center"></i> 도착 후 바로 체크인 진행</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 일정 2 -->
+                    <div class="relative pl-12 mb-4">
+                        <div class="absolute left-3.5 top-5 w-2.5 h-2.5 rounded-full bg-seoul-red -translate-x-1/2 shadow-[0_0_0_4px_#F8F6F0]"></div>
+                        <button class="accordion-btn w-full text-left bg-white p-4 rounded-xl shadow-sm border border-seoul-line active:scale-[0.99] transition-transform" onclick="toggleAccordion(this)">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <span class="text-[11px] font-bold text-seoul-red block mb-1 tracking-wide">16:30 - 18:10</span>
+                                    <h4 class="text-[15px] font-bold text-seoul-charcoal">연극 [라이어] 관람</h4>
+                                </div>
+                                <i class="fa-solid fa-chevron-down text-gray-300 mt-1 icon-rotate"></i>
+                            </div>
+                        </button>
+                        <div class="accordion-content bg-white rounded-b-xl border-x border-b border-seoul-line -mt-2 pt-2 px-4">
+                            <div class="py-4 border-t border-seoul-line mt-2 text-sm text-gray-600 space-y-2">
+                                <p><i class="fa-solid fa-masks-theater text-amber-500 w-5 text-center"></i> <strong>장소:</strong> 대학로 상명아트홀</p>
+                                <p><i class="fa-regular fa-clock text-gray-500 w-5 text-center"></i> <strong>시간:</strong> 16:20 입장 / 16:30 시작</p>
+                                <p><i class="fa-solid fa-ticket text-seoul-green w-5 text-center"></i> <strong>좌석:</strong> 법동중학교 앞자리 우선 배정</p>
+
+                                <div class="mt-3 bg-gray-50 p-3 rounded-lg border border-gray-100 shadow-sm">
+                                    <p class="text-[11px] font-bold text-gray-700 mb-2 flex items-center">
+                                        <i class="fa-regular fa-images mr-1 text-gray-400"></i> 관련 정보 <span class="text-[9px] font-normal text-gray-400 ml-1">(사진을 누르면 확대)</span>
+                                    </p>
+                                    
+                                    <div class="relative">
+                                        <button onclick="scrollSlider('slider-liar', -1)" class="absolute left-1 top-1/2 -translate-y-1/2 bg-black/50 text-white w-7 h-7 flex items-center justify-center rounded-full z-10 shadow-md backdrop-blur-sm active:bg-black/70 transition-colors"><i class="fa-solid fa-chevron-left text-xs pr-0.5"></i></button>
+                                        <button onclick="scrollSlider('slider-liar', 1)" class="absolute right-1 top-1/2 -translate-y-1/2 bg-black/50 text-white w-7 h-7 flex items-center justify-center rounded-full z-10 shadow-md backdrop-blur-sm active:bg-black/70 transition-colors"><i class="fa-solid fa-chevron-right text-xs pl-0.5"></i></button>
+
+                                        <div id="slider-liar" class="flex overflow-x-auto snap-x snap-mandatory gap-2 pb-1 hide-scrollbar scroll-smooth rounded-lg">
+                                            <div class="gallery-item flex-none w-[85%] snap-center relative rounded-lg overflow-hidden bg-white border border-gray-200 shadow-sm cursor-pointer" data-title="국민연극 라이어 포스터" onclick="openModal(this)">
+                                                <img src="https://placehold.co/600x800/E25540/ffffff?text=1.+포스터" class="w-full h-40 object-cover pointer-events-none">
+                                            </div>
+                                            <div class="gallery-item flex-none w-[85%] snap-center relative rounded-lg overflow-hidden bg-white border border-gray-200 shadow-sm cursor-pointer" data-title="상명아트홀 약도" onclick="openModal(this)">
+                                                <img src="https://placehold.co/800x600/F8F6F0/333333?text=2.+약도" class="w-full h-40 object-cover pointer-events-none">
+                                            </div>
+                                            <div class="gallery-item flex-none w-[85%] snap-center relative rounded-lg overflow-hidden bg-white border border-gray-200 shadow-sm cursor-pointer" data-title="공연 시놉시스" onclick="openModal(this)">
+                                                <img src="https://placehold.co/800x600/2A5C41/ffffff?text=3.+시놉시스" class="w-full h-40 object-cover pointer-events-none">
+                                            </div>
+                                            <div class="gallery-item flex-none w-[85%] snap-center relative rounded-lg overflow-hidden bg-white border border-gray-200 shadow-sm cursor-pointer" data-title="무대 사진" onclick="openModal(this)">
+                                                <img src="https://placehold.co/800x600/EAE5DF/333333?text=4.+무대+사진" class="w-full h-40 object-cover pointer-events-none">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bg-orange-50 p-2 rounded border border-orange-100 mt-2 text-xs text-center font-bold text-orange-800">
+                                    <i class="fa-solid fa-mobile-screen mr-1"></i> 공연 중 휴대폰 진동 필수!
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 일정 3 -->
+                    <div class="relative pl-12 mb-4">
+                        <div class="absolute left-3.5 top-5 w-2.5 h-2.5 rounded-full bg-seoul-red -translate-x-1/2 shadow-[0_0_0_4px_#F8F6F0]"></div>
+                        <button class="accordion-btn w-full text-left bg-white p-4 rounded-xl shadow-sm border border-seoul-line active:scale-[0.99] transition-transform" onclick="toggleAccordion(this)">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <span class="text-[11px] font-bold text-seoul-red block mb-1 tracking-wide">19:00 - 20:30</span>
+                                    <h4 class="text-[15px] font-bold text-seoul-charcoal">저녁 식사: [남포 면옥]</h4>
+                                </div>
+                                <i class="fa-solid fa-chevron-down text-gray-300 mt-1 icon-rotate"></i>
+                            </div>
+                        </button>
+                        <div class="accordion-content bg-white rounded-b-xl border-x border-b border-seoul-line -mt-2 pt-2 px-4">
+                            <div class="py-4 border-t border-seoul-line mt-2 text-sm text-gray-600 space-y-2">
+                                <p><i class="fa-solid fa-utensils text-seoul-red w-5 text-center"></i> <strong>장소:</strong> 을지로 남포면옥 (청실 단독사용)</p>
+                                <p><i class="fa-solid fa-award text-amber-500 w-5 text-center"></i> <strong>특징:</strong> 미슐랭 빕구르망, 블루리본 선정 노포</p>
+                                <div class="bg-gray-50 p-3 rounded border border-gray-100 mt-2 text-xs">
+                                    <p class="font-bold text-seoul-charcoal mb-1">🍜 메뉴 안내 (4인 기준)</p>
+                                    <p class="mb-1 text-gray-600">- 기본 세팅: 어복쟁반 (중)</p>
+                                    <p class="text-gray-600">- 추가 메뉴 추천: 이북식만두, 면사리, 평양냉면, 녹두전</p>
+                                </div>
+
+                                <div class="mt-3 bg-gray-50 p-3 rounded-lg border border-gray-100 shadow-sm">
+                                    <div class="relative">
+                                        <button onclick="scrollSlider('slider-dinner', -1)" class="absolute left-1 top-1/2 -translate-y-1/2 bg-black/50 text-white w-7 h-7 flex items-center justify-center rounded-full z-10 shadow-md backdrop-blur-sm active:bg-black/70 transition-colors"><i class="fa-solid fa-chevron-left text-xs pr-0.5"></i></button>
+                                        <button onclick="scrollSlider('slider-dinner', 1)" class="absolute right-1 top-1/2 -translate-y-1/2 bg-black/50 text-white w-7 h-7 flex items-center justify-center rounded-full z-10 shadow-md backdrop-blur-sm active:bg-black/70 transition-colors"><i class="fa-solid fa-chevron-right text-xs pl-0.5"></i></button>
+
+                                        <div id="slider-dinner" class="flex overflow-x-auto snap-x snap-mandatory gap-2 pb-1 hide-scrollbar scroll-smooth rounded-lg">
+                                            <div class="gallery-item flex-none w-[85%] snap-center relative rounded-lg overflow-hidden bg-white border border-gray-200 shadow-sm cursor-pointer" data-title="남포면옥 외관" onclick="openModal(this)">
+                                                <img src="https://placehold.co/800x600/E25540/ffffff?text=1.+식당+외관" class="w-full h-40 object-cover pointer-events-none">
+                                            </div>
+                                            <div class="gallery-item flex-none w-[85%] snap-center relative rounded-lg overflow-hidden bg-white border border-gray-200 shadow-sm cursor-pointer" data-title="어복쟁반" onclick="openModal(this)">
+                                                <img src="https://placehold.co/800x600/2A5C41/ffffff?text=2.+어복쟁반" class="w-full h-40 object-cover pointer-events-none">
+                                            </div>
+                                            <div class="gallery-item flex-none w-[85%] snap-center relative rounded-lg overflow-hidden bg-white border border-gray-200 shadow-sm cursor-pointer" data-title="식당 내부" onclick="openModal(this)">
+                                                <img src="https://placehold.co/800x600/F8F6F0/333333?text=3.+식당+내부" class="w-full h-40 object-cover pointer-events-none">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 일정 4 -->
+                    <div class="relative pl-12 mb-4">
+                        <div class="absolute left-3.5 top-5 w-2.5 h-2.5 rounded-full bg-seoul-charcoal -translate-x-1/2 shadow-[0_0_0_4px_#F8F6F0]"></div>
+                        <button class="accordion-btn w-full text-left bg-white p-4 rounded-xl shadow-sm border border-seoul-line active:scale-[0.99] transition-transform" onclick="toggleAccordion(this)">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <span class="text-[11px] font-bold text-gray-500 block mb-1 tracking-wide">20:30 - 🌙</span>
+                                    <h4 class="text-[15px] font-bold text-seoul-charcoal">자유 시간</h4>
+                                </div>
+                                <i class="fa-solid fa-chevron-down text-gray-300 mt-1 icon-rotate"></i>
+                            </div>
+                        </button>
+                        <div class="accordion-content bg-white rounded-b-xl border-x border-b border-seoul-line -mt-2 pt-2 px-4">
+                            <div class="py-4 border-t border-seoul-line mt-2 text-sm text-gray-600 space-y-2">
+                                <p><i class="fa-solid fa-person-walking text-seoul-green w-5 text-center"></i> <strong>근처 산책:</strong> 청계천 산책 강추! (숙소까지 도보 30분)</p>
+                                <p><i class="fa-solid fa-mug-hot text-seoul-red w-5 text-center"></i> <strong>을지로 탐방:</strong> 서울 핫플 을지로 카페 등</p>
+                                <div class="bg-red-50 p-2 rounded border border-red-100 mt-2 text-xs text-red-800 font-bold flex items-start">
+                                    <i class="fa-solid fa-triangle-exclamation mt-0.5 mr-1.5 text-seoul-red"></i> 
+                                    <span>너무 늦지 않게 숙소로 복귀해주세요. 안전하고 즐거운 시간 보내기!</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Day 2 -->
+                <div class="mb-4 relative">
+                    <div class="absolute left-4 top-8 bottom-0 w-0.5 bg-emerald-100 -z-10"></div>
+                    <h3 class="font-bold text-seoul-green bg-[#F0F7F3] border border-emerald-100 inline-block px-3 py-1.5 rounded-lg mb-5 text-sm ml-1 shadow-sm">
+                        Day 2 - 7. 4.(토)
+                    </h3>
+
+                    <!-- 2일차 일정 1 -->
+                    <div class="relative pl-12 mb-4">
+                        <div class="absolute left-3.5 top-5 w-2.5 h-2.5 rounded-full bg-seoul-green -translate-x-1/2 shadow-[0_0_0_4px_#F8F6F0]"></div>
+                        <button class="accordion-btn w-full text-left bg-white p-4 rounded-xl shadow-sm border border-seoul-line active:scale-[0.99] transition-transform" onclick="toggleAccordion(this)">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <span class="text-[11px] font-bold text-seoul-green block mb-1 tracking-wide">07:00 - 09:30</span>
+                                    <h4 class="text-[15px] font-bold text-seoul-charcoal">아침 식사</h4>
+                                </div>
+                                <i class="fa-solid fa-chevron-down text-gray-300 mt-1 icon-rotate"></i>
+                            </div>
+                        </button>
+                        <div class="accordion-content bg-white rounded-b-xl border-x border-b border-seoul-line -mt-2 pt-2 px-4">
+                            <div class="py-4 border-t border-seoul-line mt-2 text-sm text-gray-600 space-y-2">
+                                <p><i class="fa-solid fa-utensils text-seoul-green w-5 text-center"></i> <strong>장소:</strong> 호텔 1층 다이닝룸</p>
+                                <p><i class="fa-solid fa-burger text-seoul-red w-5 text-center"></i> <strong>메뉴:</strong> 한식·양식 뷔페</p>
+                                <div class="bg-gray-50 p-3 rounded border border-gray-100 mt-2 text-xs">
+                                    <ul class="space-y-1.5 text-gray-600">
+                                        <li><i class="fa-regular fa-clock text-gray-400 mr-1"></i><strong>입장마감:</strong> 09:00 까지</li>
+                                        <li><i class="fa-solid fa-people-group text-gray-400 mr-1"></i><strong>혼잡도:</strong> 7:00 양호 / 7:40 혼잡 / 8:20 양호</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2일차 일정 2 -->
+                    <div class="relative pl-12 mb-4">
+                        <div class="absolute left-3.5 top-5 w-2.5 h-2.5 rounded-full bg-seoul-green -translate-x-1/2 shadow-[0_0_0_4px_#F8F6F0]"></div>
+                        <button class="accordion-btn w-full text-left bg-white p-4 rounded-xl shadow-sm border border-seoul-line active:scale-[0.99] transition-transform" onclick="toggleAccordion(this)">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <span class="text-[11px] font-bold text-seoul-green block mb-1 tracking-wide">09:00 - 14:00</span>
+                                    <h4 class="text-[15px] font-bold text-seoul-charcoal">그룹별 활동 & 점심식사</h4>
+                                </div>
+                                <i class="fa-solid fa-chevron-down text-gray-300 mt-1 icon-rotate"></i>
+                            </div>
+                        </button>
+                        <div class="accordion-content bg-white rounded-b-xl border-x border-b border-seoul-line -mt-2 pt-2 px-4">
+                            <div class="py-4 border-t border-seoul-line mt-2 text-sm text-gray-600 space-y-2">
+                                <p><i class="fa-solid fa-users text-seoul-charcoal w-5 text-center"></i> <strong>그룹구성:</strong> 추후 안내 (개인 이동 시 연락 필수)</p>
+                                <div>
+                                    <p><i class="fa-solid fa-bus text-seoul-green w-5 text-center"></i> <strong>이동지원:</strong> 경복궁 인근 버스 이동 (09:00~13:30)</p>
+                                    <div class="ml-5 mt-2 bg-[#FFF5F3] p-2.5 rounded-lg border border-orange-100 shadow-sm">
+                                        <p class="text-[12px] font-bold text-seoul-red mb-1.5 flex items-center"><i class="fa-solid fa-circle-exclamation mr-1.5"></i>복귀 시 탑승 안내</p>
+                                        <div class="text-seoul-charcoal font-bold text-[12px] space-y-1 ml-1">
+                                            <p>• 탑승 시간: <span class="text-seoul-red text-[13px]">13:30</span></p>
+                                            <p>• 탑승 장소: <span class="text-seoul-red">하차장소와 동일</span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p><i class="fa-solid fa-sack-dollar text-seoul-red w-5 text-center"></i> <strong>활동비:</strong> 개인별 활동비 지급</p>
+                                
+                                <div class="bg-[#F0F7F3] p-3 rounded-lg border border-emerald-100 mt-3 text-xs shadow-sm">
+                                    <p class="font-bold text-seoul-green mb-2 text-[13px]"><i class="fa-solid fa-star text-seoul-red mr-1"></i> 추천 활동 & 식당</p>
+                                    <div class="space-y-2 text-gray-700">
+                                        <p><strong>[활동]</strong> 경복궁 인근(민속박물관, 현대미술관 등), 낙산성곽길, 창덕궁, 동대문 등</p>
+                                        <p><strong>[식당]</strong> 진주육회(광장시장), 도깨비불고기(동대문), 평양냉면(을지면옥)</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 2일차 일정 3 -->
+                    <div class="relative pl-12 mb-4">
+                        <div class="absolute left-3.5 top-5 w-2.5 h-2.5 rounded-full bg-seoul-green -translate-x-1/2 shadow-[0_0_0_4px_#F8F6F0]"></div>
+                        <button class="accordion-btn w-full text-left bg-white p-4 rounded-xl shadow-sm border border-seoul-line active:scale-[0.99] transition-transform" onclick="toggleAccordion(this)">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <span class="text-[11px] font-bold text-seoul-green block mb-1 tracking-wide">14:00 - 16:30</span>
+                                    <h4 class="text-[15px] font-bold text-seoul-charcoal">호텔 집결 / 대전 이동</h4>
+                                </div>
+                                <i class="fa-solid fa-chevron-down text-gray-300 mt-1 icon-rotate"></i>
+                            </div>
+                        </button>
+                        <div class="accordion-content bg-white rounded-b-xl border-x border-b border-seoul-line -mt-2 pt-2 px-4">
+                            <div class="py-3 mt-2 text-sm text-gray-600">
+                                <p class="mb-3 font-bold text-seoul-charcoal text-[13px] bg-gray-100 px-2 py-1 rounded inline-block">오후 2시까지 호텔 앞으로 모여주세요.</p>
+                                
+                                <div class="relative pl-4 border-l-2 border-gray-200 space-y-5 py-2 mt-2 ml-2">
+                                    <div class="relative">
+                                        <div class="absolute -left-[25px] top-0.5 bg-seoul-charcoal text-white w-5 h-5 rounded flex items-center justify-center text-[11px] font-bold shadow-sm">1</div>
+                                        <p class="font-bold text-seoul-charcoal text-[14px]">오후 2시</p>
+                                        <p class="text-gray-500 text-xs mt-1">호텔 앞 로비 집결 및 버스 탑승</p>
+                                    </div>
+                                    <div class="relative">
+                                        <div class="absolute -left-[25px] top-0.5 bg-seoul-charcoal text-white w-5 h-5 rounded flex items-center justify-center text-[11px] font-bold shadow-sm">2</div>
+                                        <p class="font-bold text-seoul-charcoal text-[14px]">오후 4시 30분</p>
+                                        <p class="text-gray-500 text-xs mt-1">대전 도착 예정 (희망) 시간</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- 3. 그룹 안내 화면 (새로 추가됨) -->
+        <!-- ========================================== -->
+        <section id="view-group" class="page-view">
+            <div class="bg-white p-4 sticky top-0 z-20 border-b border-seoul-line shadow-sm flex items-center justify-center">
+                <h2 class="text-lg font-bold text-seoul-charcoal">그룹 안내</h2>
+            </div>
+            
+            <div class="px-5 py-6 max-w-md mx-auto space-y-5">
+                <p class="text-xs text-gray-500 mb-2 text-center">2일차 자유 활동을 위한 그룹 배정표입니다.</p>
+
+                <!-- A Group -->
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-seoul-line">
+                    <div class="flex items-center justify-between mb-3 border-b border-gray-100 pb-3">
+                        <h3 class="font-bold text-seoul-red text-[16px]"><i class="fa-solid fa-users mr-2 opacity-80"></i>A 그룹</h3>
+                        <span class="bg-[#FFF5F3] text-seoul-red text-[11px] font-bold px-2.5 py-1 rounded-full border border-orange-100 shadow-sm"><i class="fa-solid fa-crown mr-1 text-amber-500"></i>팀장: <span id="group-a-leader">이름입력</span></span>
+                    </div>
+                    <p id="group-a-members" class="text-[13px] text-seoul-charcoal leading-relaxed whitespace-pre-wrap">팀원 정보를 입력해주세요.</p>
+                </div>
+
+                <!-- B Group -->
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-seoul-line">
+                    <div class="flex items-center justify-between mb-3 border-b border-gray-100 pb-3">
+                        <h3 class="font-bold text-seoul-green text-[16px]"><i class="fa-solid fa-users mr-2 opacity-80"></i>B 그룹</h3>
+                        <span class="bg-[#F0F7F3] text-seoul-green text-[11px] font-bold px-2.5 py-1 rounded-full border border-emerald-100 shadow-sm"><i class="fa-solid fa-crown mr-1 text-amber-500"></i>팀장: <span id="group-b-leader">이름입력</span></span>
+                    </div>
+                    <p id="group-b-members" class="text-[13px] text-seoul-charcoal leading-relaxed whitespace-pre-wrap">팀원 정보를 입력해주세요.</p>
+                </div>
+
+                <!-- C Group -->
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-seoul-line">
+                    <div class="flex items-center justify-between mb-3 border-b border-gray-100 pb-3">
+                        <h3 class="font-bold text-amber-600 text-[16px]"><i class="fa-solid fa-users mr-2 opacity-80"></i>C 그룹</h3>
+                        <span class="bg-amber-50 text-amber-600 text-[11px] font-bold px-2.5 py-1 rounded-full border border-amber-100 shadow-sm"><i class="fa-solid fa-crown mr-1 text-amber-500"></i>팀장: <span id="group-c-leader">이름입력</span></span>
+                    </div>
+                    <p id="group-c-members" class="text-[13px] text-seoul-charcoal leading-relaxed whitespace-pre-wrap">팀원 정보를 입력해주세요.</p>
+                </div>
+
+                <!-- D Group -->
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-seoul-line">
+                    <div class="flex items-center justify-between mb-3 border-b border-gray-100 pb-3">
+                        <h3 class="font-bold text-blue-600 text-[16px]"><i class="fa-solid fa-users mr-2 opacity-80"></i>D 그룹</h3>
+                        <span class="bg-blue-50 text-blue-600 text-[11px] font-bold px-2.5 py-1 rounded-full border border-blue-100 shadow-sm"><i class="fa-solid fa-crown mr-1 text-amber-500"></i>팀장: <span id="group-d-leader">이름입력</span></span>
+                    </div>
+                    <p id="group-d-members" class="text-[13px] text-seoul-charcoal leading-relaxed whitespace-pre-wrap">팀원 정보를 입력해주세요.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- 4. 상세 안내 화면 -->
+        <!-- ========================================== -->
+        <section id="view-detail" class="page-view">
+            <div class="bg-white p-4 sticky top-0 z-20 border-b border-seoul-line shadow-sm flex items-center justify-center">
+                <h2 class="text-lg font-bold text-seoul-charcoal">상세 안내</h2>
+            </div>
+            
+            <div class="px-5 py-6 max-w-md mx-auto space-y-5">
+                <!-- 집결 안내 -->
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-seoul-line">
+                    <h3 class="font-bold text-seoul-red mb-3 flex items-center text-[15px]">
+                        <i class="fa-solid fa-flag mr-2"></i>집결 및 출발 안내
+                    </h3>
+                    <div class="bg-[#FFF5F3] p-4 rounded-xl border border-orange-100 mb-4 space-y-4">
+                        <div class="text-center">
+                            <p class="text-xs font-bold text-seoul-red mb-1 bg-white border border-orange-100 inline-block px-2 py-0.5 rounded-full">대전 ➡️ 서울</p>
+                            <p class="text-[14px] font-bold text-seoul-charcoal">7월 3일(금) 오후 <span class="text-seoul-red text-lg">13:00</span> 출발</p>
+                        </div>
+                        <div class="w-full h-px bg-orange-200"></div>
+                        <div class="text-center">
+                            <p class="text-xs font-bold text-seoul-green mb-1 bg-white border border-emerald-100 inline-block px-2 py-0.5 rounded-full">서울 ➡️ 대전</p>
+                            <p class="text-[14px] font-bold text-seoul-charcoal">7월 4일(토) 오후 <span class="text-seoul-green text-lg">14:00</span> 출발</p>
+                            <p class="text-[13px] font-bold text-seoul-charcoal mt-1.5 bg-[#F0F7F3] inline-block px-3 py-1 rounded-lg border border-emerald-100"><i class="fa-solid fa-location-dot text-seoul-green mr-1.5"></i>호텔 앞 로비</p>
+                        </div>
+                    </div>
+                    <ul class="text-[13px] text-gray-600 list-disc ml-5">
+                        <li>원활한 출발을 위해 시간 엄수 부탁드립니다.</li>
+                    </ul>
+                </div>
+
+                <!-- 가는 길 -->
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-seoul-line">
+                    <h3 class="font-bold text-seoul-green mb-3 flex items-center text-[15px]">
+                        <i class="fa-solid fa-map-location-dot mr-2"></i>숙소 가는 길
+                    </h3>
+                    <div class="bg-[#F0F7F3] border border-emerald-100 rounded p-3 mb-4">
+                        <p class="text-[13px] font-bold text-seoul-charcoal text-center">호텔 아트리움 서울 종로<br><span class="text-xs font-normal text-gray-500">(서울 종로구 창경궁로 106)</span></p>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-3">
+                        <a href="nmap://route/walk?dlat=37.571408&dlng=126.996720&dname=%ED%98%B8%ED%85%94%EC%95%84%ED%8A%B8%EB%A6%AC%EC%9B%80%EC%84%9C%EC%9A%B8%EC%A2%85%EB%A1%9C&appname=pamphlet" class="bg-[#03C75A] text-white rounded-xl p-3 flex flex-col items-center justify-center shadow-sm active:scale-95 transition-transform">
+                            <span class="font-black italic mb-1 text-lg">N</span>
+                            <span class="text-[11px] font-bold">네이버 길찾기(도보)</span>
+                        </a>
+                        <a href="kakaomap://route?ep=37.571408,126.996720&en=%ED%98%B8%ED%85%94%20%EC%95%84%ED%8A%B8%EB%A6%AC%EC%9B%80%20%EC%84%9C%EC%9A%B8%20%EC%A2%85%EB%A1%9C&by=FOOT" class="bg-[#FEE500] text-[#191919] rounded-xl p-3 flex flex-col items-center justify-center shadow-sm active:scale-95 transition-transform">
+                            <i class="fa-solid fa-location-arrow mb-1 text-lg"></i>
+                            <span class="text-[11px] font-bold">카카오 길찾기(도보)</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 비상 연락망 -->
+                <div class="bg-white p-5 rounded-2xl border border-seoul-line shadow-sm">
+                    <h3 class="font-bold text-seoul-charcoal mb-3 flex items-center text-[15px]">
+                        <i class="fa-solid fa-phone-volume mr-2 text-seoul-red"></i>비상 연락망
+                    </h3>
+                    <div class="grid grid-cols-3 gap-2">
+                        <a href="tel:010-6616-1129" class="bg-[#FFF5F3] border border-orange-100 rounded-xl aspect-square flex flex-col items-center justify-center shadow-sm active:bg-orange-100 transition-colors">
+                            <div class="w-8 h-8 bg-white rounded-full flex items-center justify-center text-seoul-red mb-1.5 shadow-sm">
+                                <i class="fa-solid fa-phone"></i>
+                            </div>
+                            <span class="text-[10px] text-gray-500 mb-0.5">간사</span>
+                            <span class="text-xs font-bold text-seoul-charcoal">김왕균</span>
+                        </a>
+                        <a href="tel:010-2667-3197" class="bg-[#FFF5F3] border border-orange-100 rounded-xl aspect-square flex flex-col items-center justify-center shadow-sm active:bg-orange-100 transition-colors">
+                            <div class="w-8 h-8 bg-white rounded-full flex items-center justify-center text-seoul-red mb-1.5 shadow-sm">
+                                <i class="fa-solid fa-phone"></i>
+                            </div>
+                            <span class="text-[10px] text-gray-500 mb-0.5">간사</span>
+                            <span class="text-xs font-bold text-seoul-charcoal">박덕호</span>
+                        </a>
+                        <a href="tel:010-2408-6467" class="bg-[#FFF5F3] border border-orange-100 rounded-xl aspect-square flex flex-col items-center justify-center shadow-sm active:bg-orange-100 transition-colors">
+                            <div class="w-8 h-8 bg-white rounded-full flex items-center justify-center text-seoul-red mb-1.5 shadow-sm">
+                                <i class="fa-solid fa-phone"></i>
+                            </div>
+                            <span class="text-[10px] text-gray-500 mb-0.5">간사</span>
+                            <span class="text-xs font-bold text-seoul-charcoal">유민아</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- 4. 숙소 안내 화면 -->
+        <!-- ========================================== -->
+        <section id="view-accom" class="page-view">
+            <div class="bg-white p-4 sticky top-0 z-20 border-b border-seoul-line shadow-sm flex items-center justify-center">
+                <h2 class="text-lg font-bold text-seoul-charcoal">숙소 안내</h2>
+            </div>
+            
+            <div class="px-5 py-6 max-w-md mx-auto space-y-5">
+                <!-- 리조트 정보 (사진 제거, 다크 차콜 배경 적용) -->
+                 <div class="bg-white rounded-2xl shadow-sm border border-seoul-line overflow-hidden">
+                    <div class="h-32 bg-seoul-charcoal relative flex items-center justify-center text-white overflow-hidden">
+                        <div class="relative z-10 text-center px-4">
+                            <h3 class="font-bold text-xl mb-1 text-white"><i class="fa-solid fa-hotel mr-2 text-seoul-red"></i>호텔 아트리움</h3>
+                            <p class="text-[11px] text-gray-300">편안한 휴식과 여행의 시작을 함께할 숙소입니다.</p>
+                        </div>
+                    </div>
+                    <div class="p-5 bg-gray-50">
+                        <div class="grid grid-cols-2 gap-3 text-[13px]">
+                            <div class="flex flex-col items-center justify-center p-3 bg-white rounded-lg border border-gray-200 text-center shadow-sm">
+                                <i class="fa-solid fa-map-pin text-seoul-green text-lg mb-1"></i>
+                                <span class="font-bold text-seoul-charcoal">위치</span>
+                                <span class="text-gray-500 text-[11px] mt-1">종로5가역, 광장시장 근처</span>
+                            </div>
+                            <div class="flex flex-col items-center justify-center p-3 bg-white rounded-lg border border-gray-200 text-center shadow-sm">
+                                <i class="fa-regular fa-clock text-seoul-red text-lg mb-1"></i>
+                                <span class="font-bold text-seoul-charcoal">체크인/아웃</span>
+                                <span class="text-gray-500 text-[11px] mt-1">도착 후 바로 / 11:00</span>
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+
+                 <!-- 숙소 가는 길 추가 -->
+                 <div class="bg-white p-5 rounded-2xl shadow-sm border border-seoul-line">
+                    <h3 class="font-bold text-seoul-charcoal mb-3 flex items-center text-[15px]">
+                        <i class="fa-solid fa-map-location-dot text-seoul-red mr-2"></i>숙소 가는 길
+                    </h3>
+                    <div class="grid grid-cols-2 gap-3">
+                        <a href="nmap://route/walk?dlat=37.571408&dlng=126.996720&dname=%ED%98%B8%ED%85%94%EC%95%84%ED%8A%B8%EB%A6%AC%EC%9B%80%EC%84%9C%EC%9A%B8%EC%A2%85%EB%A1%9C&appname=pamphlet" class="bg-[#03C75A] text-white rounded-xl p-3 flex flex-col items-center justify-center shadow-sm active:scale-95 transition-transform">
+                            <span class="font-black italic mb-1 text-lg">N</span>
+                            <span class="text-[11px] font-bold">네이버 길찾기(도보)</span>
+                        </a>
+                        <a href="kakaomap://route?ep=37.571408,126.996720&en=%ED%98%B8%ED%85%94%20%EC%95%84%ED%8A%B8%EB%A6%AC%EC%9B%80%20%EC%84%9C%EC%9A%B8%20%EC%A2%85%EB%A1%9C&by=FOOT" class="bg-[#FEE500] text-[#191919] rounded-xl p-3 flex flex-col items-center justify-center shadow-sm active:scale-95 transition-transform">
+                            <i class="fa-solid fa-location-arrow mb-1 text-lg"></i>
+                            <span class="text-[11px] font-bold">카카오 길찾기(도보)</span>
+                        </a>
+                    </div>
+                 </div>
+
+                 <!-- 조식 운영 정보 추가 -->
+                 <div class="bg-white p-5 rounded-2xl shadow-sm border border-seoul-line">
+                    <h3 class="font-bold text-seoul-charcoal mb-3 flex items-center text-[15px]">
+                        <i class="fa-solid fa-utensils text-seoul-green mr-2"></i>조식 이용 안내
+                    </h3>
+                    <div class="bg-gray-50 p-3.5 rounded-xl border border-gray-200 text-[13px] text-gray-600 space-y-2 shadow-inner">
+                        <p class="flex items-start"><i class="fa-solid fa-location-dot mt-0.5 text-seoul-red w-5 text-center"></i> <span><strong>장소:</strong> 호텔 1층 다이닝룸 (한식·양식)</span></p>
+                        <p class="flex items-start"><i class="fa-regular fa-clock mt-0.5 text-gray-500 w-5 text-center"></i> <span><strong>시간:</strong> 07:00 ~ 09:30 <span class="text-seoul-red font-bold">(09:00 입장마감)</span></span></p>
+                        <div class="mt-2 border-t border-gray-200 pt-2 text-xs">
+                            <p class="font-bold text-gray-700 mb-1.5">시간대별 혼잡도 예측</p>
+                            <p class="flex items-center"><span class="w-16">07:00</span> <span class="bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded text-[10px] font-bold">양호</span></p>
+                            <p class="flex items-center mt-1"><span class="w-16">07:40</span> <span class="bg-red-100 text-red-700 px-2 py-0.5 rounded text-[10px] font-bold">혼잡</span></p>
+                            <p class="flex items-center mt-1"><span class="w-16">08:20</span> <span class="bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded text-[10px] font-bold">양호</span></p>
+                        </div>
+                    </div>
+                 </div>
+
+                 <!-- 객실 배정 -->
+                 <div class="bg-white p-5 rounded-2xl shadow-sm border border-seoul-line">
+                    <h3 class="font-bold text-seoul-charcoal mb-4 flex items-center text-[15px]">
+                        <i class="fa-solid fa-bed text-seoul-red mr-2"></i>객실 배정 안내
+                    </h3>
+                    
+                    <div class="grid grid-cols-3 gap-2">
+                        <!-- 각 방을 3열 정사각형 아이콘 디자인으로 배치 -->
+                        <div class="bg-white border border-gray-200 rounded-xl aspect-square flex flex-col items-center justify-center shadow-sm p-1">
+                            <div class="w-7 h-7 bg-orange-50 rounded-full flex items-center justify-center text-seoul-red mb-1.5 shadow-sm">
+                                <i class="fa-solid fa-key text-[11px]"></i>
+                            </div>
+                            <p class="text-[11px] font-bold text-seoul-charcoal text-center leading-tight tracking-tighter">
+                                임동순, 김예지
+                            </p>
+                        </div>
+                        <div class="bg-white border border-gray-200 rounded-xl aspect-square flex flex-col items-center justify-center shadow-sm p-1">
+                            <div class="w-7 h-7 bg-orange-50 rounded-full flex items-center justify-center text-seoul-red mb-1.5 shadow-sm">
+                                <i class="fa-solid fa-key text-[11px]"></i>
+                            </div>
+                            <p class="text-[11px] font-bold text-seoul-charcoal text-center leading-tight tracking-tighter">
+                                손연숙, 유혜원
+                            </p>
+                        </div>
+                        <div class="bg-white border border-gray-200 rounded-xl aspect-square flex flex-col items-center justify-center shadow-sm p-1">
+                            <div class="w-7 h-7 bg-emerald-50 rounded-full flex items-center justify-center text-seoul-green mb-1.5 shadow-sm">
+                                <i class="fa-solid fa-key text-[11px]"></i>
+                            </div>
+                            <p class="text-[11px] font-bold text-seoul-charcoal text-center leading-tight tracking-tighter">
+                                김애란, 서종례<br>이윤경
+                            </p>
+                        </div>
+                        <div class="bg-white border border-gray-200 rounded-xl aspect-square flex flex-col items-center justify-center shadow-sm p-1">
+                            <div class="w-7 h-7 bg-gray-50 rounded-full flex items-center justify-center text-seoul-charcoal mb-1.5 shadow-sm">
+                                <i class="fa-solid fa-key text-[11px]"></i>
+                            </div>
+                            <p class="text-[11px] font-bold text-seoul-charcoal text-center leading-tight tracking-tighter">
+                                이창수, 김왕균<br>이철섭, 김영호
+                            </p>
+                        </div>
+                        <div class="bg-white border border-gray-200 rounded-xl aspect-square flex flex-col items-center justify-center shadow-sm p-1">
+                            <div class="w-7 h-7 bg-gray-50 rounded-full flex items-center justify-center text-seoul-charcoal mb-1.5 shadow-sm">
+                                <i class="fa-solid fa-key text-[11px]"></i>
+                            </div>
+                            <p class="text-[11px] font-bold text-seoul-charcoal text-center leading-tight tracking-tighter">
+                                정지현, 신보라<br>정진경, 정수지
+                            </p>
+                        </div>
+                        <div class="bg-white border border-gray-200 rounded-xl aspect-square flex flex-col items-center justify-center shadow-sm p-1">
+                            <div class="w-7 h-7 bg-gray-50 rounded-full flex items-center justify-center text-seoul-charcoal mb-1.5 shadow-sm">
+                                <i class="fa-solid fa-key text-[11px]"></i>
+                            </div>
+                            <p class="text-[11px] font-bold text-seoul-charcoal text-center leading-tight tracking-tighter">
+                                유민아, 남궁유진<br>김지연, 김예진
+                            </p>
+                        </div>
+                        <div class="bg-white border border-gray-200 rounded-xl aspect-square flex flex-col items-center justify-center shadow-sm p-1">
+                            <div class="w-7 h-7 bg-gray-50 rounded-full flex items-center justify-center text-seoul-charcoal mb-1.5 shadow-sm">
+                                <i class="fa-solid fa-key text-[11px]"></i>
+                            </div>
+                            <p class="text-[11px] font-bold text-seoul-charcoal text-center leading-tight tracking-tighter">
+                                박선형, 김은정<br>서영미, 천은성
+                            </p>
+                        </div>
+                        <div class="bg-white border border-gray-200 rounded-xl aspect-square flex flex-col items-center justify-center shadow-sm p-1">
+                            <div class="w-7 h-7 bg-gray-50 rounded-full flex items-center justify-center text-seoul-charcoal mb-1.5 shadow-sm">
+                                <i class="fa-solid fa-key text-[11px]"></i>
+                            </div>
+                            <p class="text-[11px] font-bold text-seoul-charcoal text-center leading-tight tracking-tighter">
+                                김재우, 김용상<br>박덕호, 성수현
+                            </p>
+                        </div>
+                        <div class="bg-white border border-gray-200 rounded-xl aspect-square flex flex-col items-center justify-center shadow-sm p-1">
+                            <div class="w-7 h-7 bg-gray-50 rounded-full flex items-center justify-center text-seoul-charcoal mb-1.5 shadow-sm">
+                                <i class="fa-solid fa-key text-[11px]"></i>
+                            </div>
+                            <p class="text-[11px] font-bold text-seoul-charcoal text-center leading-tight tracking-tighter">
+                                윤은주, 방미라<br>정학명, 김정아
+                            </p>
+                        </div>
+                        <div class="bg-white border border-gray-200 rounded-xl aspect-square flex flex-col items-center justify-center shadow-sm p-1">
+                            <div class="w-7 h-7 bg-gray-50 rounded-full flex items-center justify-center text-seoul-charcoal mb-1.5 shadow-sm">
+                                <i class="fa-solid fa-key text-[11px]"></i>
+                            </div>
+                            <p class="text-[11px] font-bold text-seoul-charcoal text-center leading-tight tracking-tighter">
+                                유보배, 임수경<br>방정은, 이미란
+                            </p>
+                        </div>
+                    </div>
+                        
+                    <div class="text-center mt-4 text-[11px] text-gray-500 bg-gray-50 py-2 rounded border border-gray-100 shadow-sm">
+                        * 호실 번호는 체크인 시 프론트에서 안내됩니다.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 푸터 (Footer) 추가 -->
+        <footer class="pt-6 pb-8 px-6 text-center">
+            <div class="inline-block border-t border-seoul-line pt-5 w-[80%] mx-auto">
+                <p class="text-[11px] font-bold text-gray-500 tracking-wide mb-1">
+                    <i class="fa-solid fa-graduation-cap mr-1"></i> 주관: 대전법동중학교 친목회
+                </p>
+                <p class="text-[10px] font-medium text-gray-400 tracking-widest">
+                    <i class="fa-solid fa-code mr-1"></i> App Design & Development by 김예진
+                </p>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- 하단에 딱 붙는 안정적인 네비게이션 탭 바 (그룹 탭 추가됨) -->
+    <nav class="bg-white border-t border-gray-200 fixed bottom-0 left-0 right-0 w-full z-50 px-1 pb-safe shadow-[0_-4px_10px_-1px_rgba(0,0,0,0.05)]">
+        <div class="max-w-md mx-auto flex justify-between">
+            <button onclick="switchTab('home')" id="tab-home" class="nav-btn active flex-1 py-3 flex flex-col items-center justify-center text-seoul-red transition-colors"><i class="fa-solid fa-house text-[1.1rem] mb-1"></i><span class="text-[9px] font-bold">홈</span></button>
+            <button onclick="switchTab('schedule')" id="tab-schedule" class="nav-btn flex-1 py-3 flex flex-col items-center justify-center text-gray-400 transition-colors"><i class="fa-regular fa-calendar-check text-[1.1rem] mb-1"></i><span class="text-[9px] font-medium">일정</span></button>
+            <button onclick="switchTab('group')" id="tab-group" class="nav-btn flex-1 py-3 flex flex-col items-center justify-center text-gray-400 transition-colors"><i class="fa-solid fa-users text-[1.1rem] mb-1"></i><span class="text-[9px] font-medium">그룹</span></button>
+            <button onclick="switchTab('detail')" id="tab-detail" class="nav-btn flex-1 py-3 flex flex-col items-center justify-center text-gray-400 transition-colors"><i class="fa-solid fa-circle-info text-[1.1rem] mb-1"></i><span class="text-[9px] font-medium">안내</span></button>
+            <button onclick="switchTab('accom')" id="tab-accom" class="nav-btn flex-1 py-3 flex flex-col items-center justify-center text-gray-400 transition-colors"><i class="fa-solid fa-bed text-[1.1rem] mb-1"></i><span class="text-[9px] font-medium">숙소</span></button>
+        </div>
+    </nav>
+
+    <!-- 사진 크게 보기 모달 -->
+    <div id="photo-modal" onclick="closeModal()">
+        <button class="absolute top-6 right-6 text-white text-2xl p-3 bg-white/10 rounded-full w-12 h-12 flex items-center justify-center active:scale-95 backdrop-blur-md border border-white/20" onclick="closeModal()">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+        
+        <!-- 좌우 스와이프 버튼 (데스크탑 겸용) -->
+        <button id="modal-prev-btn" class="absolute left-3 top-1/2 -translate-y-1/2 text-white text-xl p-2 bg-black/60 rounded-full w-10 h-10 flex items-center justify-center z-50 hidden active:bg-black/80 transition-colors" onclick="event.stopPropagation(); navigateModal(-1)"><i class="fa-solid fa-chevron-left pr-0.5"></i></button>
+        <button id="modal-next-btn" class="absolute right-3 top-1/2 -translate-y-1/2 text-white text-xl p-2 bg-black/60 rounded-full w-10 h-10 flex items-center justify-center z-50 hidden active:bg-black/80 transition-colors" onclick="event.stopPropagation(); navigateModal(1)"><i class="fa-solid fa-chevron-right pl-0.5"></i></button>
+        
+        <!-- 현재 사진 인디케이터 -->
+        <div id="modal-indicator" class="absolute top-8 left-1/2 -translate-x-1/2 text-white font-bold bg-black/50 px-4 py-1.5 rounded-full text-xs hidden z-50 tracking-widest shadow-md">1 / 4</div>
+
+        <!-- 터치 스와이프 영역 및 이미지 -->
+        <div class="w-full flex-1 flex justify-center items-center px-6" id="modal-touch-area" onclick="event.stopPropagation()">
+            <img id="modal-img" src="" alt="확대된 사진" class="transition-opacity duration-200">
+        </div>
+        
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 text-white text-center bg-black bg-opacity-70 px-6 py-3 rounded-2xl backdrop-blur-sm z-50 min-w-[200px] shadow-lg pointer-events-none">
+            <p id="modal-uploader" class="font-bold text-sm tracking-wide"></p>
+        </div>
+    </div>
+
+    <!-- 실시간 공지사항 팝업 모달 -->
+    <div id="notice-modal" class="hidden fixed z-[110] left-0 top-0 w-full h-full bg-black/60 backdrop-blur-sm flex justify-center items-center opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-3xl p-6 w-11/12 max-w-sm shadow-2xl transform scale-95 transition-transform duration-300">
+            <h3 class="text-lg font-black text-seoul-red mb-3 flex items-center"><i class="fa-solid fa-bell mr-2 animate-bounce"></i>실시간 공지</h3>
+            <p id="notice-text" class="text-[14px] text-seoul-charcoal leading-relaxed whitespace-pre-wrap bg-orange-50 p-4 rounded-xl border border-orange-100">공지 내용이 여기에 표시됩니다.</p>
+            <button onclick="closeNotice()" class="mt-5 w-full bg-seoul-charcoal text-white font-bold py-3 rounded-xl active:scale-95 transition-transform">확인했습니다</button>
+        </div>
+    </div>
+
+    <!-- UI 스크립트 -->
+    <script>
+        // 탭 전환 및 스크롤 최상단 이동
+        function switchTab(tabName) {
+            document.querySelectorAll('.page-view').forEach(v => v.classList.remove('active'));
+            document.getElementById('view-' + tabName).classList.add('active');
+            
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('text-seoul-red');
+                btn.classList.add('text-gray-400');
+                btn.querySelector('span').classList.remove('font-bold');
+                btn.querySelector('span').classList.add('font-medium');
+            });
+            
+            const activeTab = document.getElementById('tab-' + tabName);
+            if(activeTab) {
+                activeTab.classList.remove('text-gray-400');
+                activeTab.classList.add('text-seoul-red'); // 활성화 탭 테라코타 컬러 적용
+                activeTab.querySelector('span').classList.remove('font-medium');
+                activeTab.querySelector('span').classList.add('font-bold');
+            }
+            
+            window.scrollTo({ top: 0, behavior: 'auto' });
+        }
+
+        // 아코디언 열기/닫기
+        function toggleAccordion(button) {
+            const content = button.nextElementSibling;
+            if (!button.classList.contains('active-btn')) {
+                // 열기
+                button.classList.add('active-btn', 'border-orange-200', 'bg-orange-50');
+                button.classList.remove('bg-white');
+                content.classList.add('active');
+            } else {
+                // 닫기
+                button.classList.remove('active-btn', 'border-orange-200', 'bg-orange-50');
+                button.classList.add('bg-white');
+                content.classList.remove('active');
+            }
+        }
+
+        // 가로 슬라이더 스크롤
+        function scrollSlider(sliderId, direction) {
+            const slider = document.getElementById(sliderId);
+            if (slider) {
+                const scrollAmount = slider.clientWidth * 0.85; 
+                slider.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
+            }
+        }
+
+        // --- 사진 갤러리 스와이프 기능 ---
+        let currentGallery = [];
+        let currentIndex = 0;
+
+        function openModal(element) {
+            const modal = document.getElementById('photo-modal');
+            
+            // 같은 슬라이더 안에 있는 사진들(gallery-item)을 묶어서 배열로 만듭니다.
+            const slider = element.closest('.flex.overflow-x-auto');
+            if (slider) {
+                currentGallery = Array.from(slider.querySelectorAll('.gallery-item'));
+                currentIndex = currentGallery.indexOf(element);
+            } else {
+                currentGallery = [element];
+                currentIndex = 0;
+            }
+
+            updateModalView();
+            modal.classList.add('show');
+        }
+
+        function updateModalView() {
+            if (currentGallery.length === 0) return;
+            
+            const element = currentGallery[currentIndex];
+            const imgSrc = element.querySelector('img').src;
+            const title = element.getAttribute('data-title');
+            
+            const modalImg = document.getElementById('modal-img');
+            const prevBtn = document.getElementById('modal-prev-btn');
+            const nextBtn = document.getElementById('modal-next-btn');
+            const indicator = document.getElementById('modal-indicator');
+
+            // 사진 부드러운 전환 (페이드 효과)
+            modalImg.style.opacity = '0';
+            setTimeout(() => {
+                modalImg.src = imgSrc;
+                document.getElementById('modal-uploader').innerHTML = `<i class="fa-solid fa-circle-info mr-2 text-seoul-red"></i>${title || '상세 정보'}`;
+                modalImg.style.opacity = '1';
+            }, 150);
+
+            // 갤러리 사진이 2장 이상일 때만 좌우 버튼 및 인디케이터 표시
+            if (currentGallery.length > 1) {
+                prevBtn.style.display = currentIndex > 0 ? 'flex' : 'none';
+                nextBtn.style.display = currentIndex < currentGallery.length - 1 ? 'flex' : 'none';
+                indicator.style.display = 'block';
+                indicator.innerText = `${currentIndex + 1} / ${currentGallery.length}`;
+            } else {
+                prevBtn.style.display = 'none';
+                nextBtn.style.display = 'none';
+                indicator.style.display = 'none';
+            }
+        }
+
+        // 좌우 버튼 클릭 시 이동
+        function navigateModal(direction) {
+            currentIndex += direction;
+            if (currentIndex < 0) currentIndex = 0;
+            if (currentIndex >= currentGallery.length) currentIndex = currentGallery.length - 1;
+            updateModalView();
+        }
+
+        // 화면 스와이프(드래그) 터치 이벤트 감지
+        let touchStartX = 0;
+        let touchEndX = 0;
+        const touchArea = document.getElementById('modal-touch-area');
+
+        touchArea.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, {passive: true});
+
+        touchArea.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, {passive: true});
+
+        function handleSwipe() {
+            const SWIPE_THRESHOLD = 40; // 40px 이상 드래그해야 넘어가도록 설정
+            if (currentGallery.length <= 1) return; // 1장일 땐 무시
+            
+            if (touchStartX - touchEndX > SWIPE_THRESHOLD) {
+                // 왼쪽으로 쓱 (다음 사진)
+                if (currentIndex < currentGallery.length - 1) navigateModal(1);
+            }
+            if (touchEndX - touchStartX > SWIPE_THRESHOLD) {
+                // 오른쪽으로 쓱 (이전 사진)
+                if (currentIndex > 0) navigateModal(-1);
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('photo-modal').classList.remove('show');
+        }
+
+        // 공지사항 닫기
+        function closeNotice() {
+            const noticeModal = document.getElementById('notice-modal');
+            if(!noticeModal.classList.contains('hidden')) {
+                noticeModal.classList.add('opacity-0');
+                noticeModal.querySelector('div').classList.add('scale-95');
+                setTimeout(() => noticeModal.classList.add('hidden'), 300);
+            }
+        }
+    </script>
+
+    <!-- 클라우드 데이터 실시간 동기화 스크립트 -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // ⚠️주의: 깃허브 배포 시 아래 빈칸에 선생님의 파이어베이스 설정값을 붙여넣어야 합니다!
+        // ⚠️주의: 깃허브 배포 시 아래 빈칸에 선생님의 실제 파이어베이스 설정값을 붙여넣어야 합니다!
+        const firebaseConfig = {
+            apiKey: "AIzaSyBpB10wDN8yfdCHKa3uSWKo03TQVF6BGaI",
+            authDomain: "retreat-2026-ce30d.firebaseapp.com",
+            projectId: "retreat-2026-ce30d",
+            storageBucket: "retreat-2026-ce30d.firebasestorage.app",
+            messagingSenderId: "465178932210",
+            appId: "1:465178932210:web:bf26dffacdf6666144b16b"
+        };
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'beopdong-retreat-2026';
+
+        let app, auth, db;
+        try {
+            if (Object.keys(firebaseConfig).length > 0) {
+                app = initializeApp(firebaseConfig);
+                auth = getAuth(app);
+                db = getFirestore(app);
+                
+                const initAuth = async () => {
+                    try {
+                        if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                            await signInWithCustomToken(auth, __initial_auth_token);
+                        } else { 
+                            await signInAnonymously(auth); 
+                        }
+                        listenForUpdates();
+                    } catch (e) { console.warn("인증 실패:", e); }
+                };
+                initAuth();
+            }
+        } catch(e) { console.warn("Firebase 연결 안됨"); }
+
+        function listenForUpdates() {
+            if (!db) return;
+            const settingsRef = doc(db, 'artifacts', appId, 'public', 'data', 'retreat_data', 'settings');
+            
+            onSnapshot(settingsRef, (snapshot) => {
+                if (snapshot.exists()) {
+                    const data = snapshot.data();
+                    
+                    // 1. 공지사항 팝업 연동
+                    if (data.popup && data.popup.isActive) {
+                        const noticeModal = document.getElementById('notice-modal');
+                        document.getElementById('notice-text').innerText = data.popup.message;
+                        noticeModal.classList.remove('hidden');
+                        setTimeout(() => {
+                            noticeModal.classList.remove('opacity-0');
+                            noticeModal.querySelector('div').classList.remove('scale-95');
+                        }, 10);
+                    } else {
+                        closeNotice();
+                    }
+
+                    // 2. 그룹 정보 연동
+                    if (data.groups) {
+                        ['A', 'B', 'C', 'D'].forEach(group => {
+                            if (data.groups[group]) {
+                                const leaderEl = document.getElementById(`group-${group.toLowerCase()}-leader`);
+                                const membersEl = document.getElementById(`group-${group.toLowerCase()}-members`);
+                                if(leaderEl) leaderEl.innerText = data.groups[group].leader || '이름입력';
+                                if(membersEl) membersEl.innerText = data.groups[group].members || '팀원 정보를 입력해주세요.';
+                            }
+                        });
+                    }
+                }
+            }, (error) => {
+                console.warn("데이터 가져오기 에러:", error);
+            });
+        }
+    </script>
+</body>
+</html>
