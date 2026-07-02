@@ -2,40 +2,42 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <!-- 모바일 기기의 시스템 설정을 존중하도록 설정 -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>시스템 글꼴 반응형 웹페이지</title>
+    <!-- 아이폰 크롬이 사용자의 글꼴 설정을 무시하지 않도록 최대 확대 배율을 5로 설정 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>아이폰 크롬 대응 반응형</title>
     <style>
-        /* 1. 시스템 설정 무시 방지: 강제로 100%로 설정 */
+        /* 크롬에서 글꼴 크기 조절을 강제로 허용 */
         html {
-            -webkit-text-size-adjust: 100%;
-            text-size-adjust: 100%;
+            -webkit-text-size-adjust: 100% !important;
+            text-size-adjust: 100% !important;
         }
 
         body {
-            /* 2. px 대신 rem 사용: 1rem은 사용자 휴대폰의 기본 글꼴 크기와 같습니다 */
-            font-family: sans-serif;
+            /* 시스템 기본 서체 설정 */
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             padding: 1.25rem;
             line-height: 1.5;
+            /* 기본 글꼴 크기를 100%로 보장 */
+            font-size: 100% !important;
         }
 
-        /* 3. 시스템 설정에 따라 자동으로 커지는 클래스 */
+        /* rem 단위를 기반으로 하되, 시스템 설정 변화 시 브라우저가 인식하도록 !important 추가 */
         .dynamic-font {
-            font-size: 1rem; /* 기본 본문 크기 */
+            font-size: 1rem !important; 
         }
 
         .dynamic-title {
-            font-size: 1.5rem; /* 기본 크기의 1.5배 */
+            font-size: 1.5rem !important; 
             font-weight: bold;
         }
     </style>
 </head>
 <body>
     <div class="dynamic-title">
-        시스템 설정에 반응하는 제목
+        시스템 설정에 반응하는 제목 (아이폰 크롬 대응)
     </div>
     <div class="dynamic-font">
-        이 텍스트는 휴대폰 설정에서 글자 크기를 키우면 자동으로 함께 커집니다.
+        아이폰 크롬에서 설정의 '텍스트 크기'를 변경한 후, 이 페이지를 새로고침 해보세요. 시스템 설정을 최대한 존중하도록 설정되었습니다.
     </div>
 </body>
 </html>
