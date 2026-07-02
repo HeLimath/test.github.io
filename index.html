@@ -2,42 +2,44 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <!-- 아이폰 크롬이 사용자의 글꼴 설정을 무시하지 않도록 최대 확대 배율을 5로 설정 -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <title>아이폰 크롬 대응 반응형</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>사용자 조절 폰트 페이지</title>
     <style>
-        /* 크롬에서 글꼴 크기 조절을 강제로 허용 */
-        html {
-            -webkit-text-size-adjust: 100% !important;
-            text-size-adjust: 100% !important;
-        }
-
         body {
-            /* 시스템 기본 서체 설정 */
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            padding: 1.25rem;
-            line-height: 1.5;
-            /* 기본 글꼴 크기를 100%로 보장 */
-            font-size: 100% !important;
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            padding: 20px;
+            transition: font-size 0.2s ease; /* 부드러운 전환 */
         }
-
-        /* rem 단위를 기반으로 하되, 시스템 설정 변화 시 브라우저가 인식하도록 !important 추가 */
-        .dynamic-font {
-            font-size: 1rem !important; 
+        .controls {
+            margin-bottom: 20px;
+            padding: 10px;
+            background: #f0f0f0;
+            border-radius: 8px;
         }
-
-        .dynamic-title {
-            font-size: 1.5rem !important; 
-            font-weight: bold;
+        button {
+            padding: 10px 15px;
+            margin-right: 10px;
+            font-size: 16px;
         }
     </style>
 </head>
 <body>
-    <div class="dynamic-title">
-        시스템 설정에 반응하는 제목 (아이폰 크롬 대응)
+    <div class="controls">
+        <button onclick="changeFontSize(1)">글씨 크게</button>
+        <button onclick="changeFontSize(-1)">글씨 작게</button>
     </div>
-    <div class="dynamic-font">
-        아이폰 크롬에서 설정의 '텍스트 크기'를 변경한 후, 이 페이지를 새로고침 해보세요. 시스템 설정을 최대한 존중하도록 설정되었습니다.
+
+    <div id="content">
+        <h1>참여자 명단</h1>
+        <p>아이폰 크롬에서는 시스템 설정을 자동으로 가져오지 못합니다. 대신 위 버튼으로 글씨를 조절하세요!</p>
     </div>
+
+    <script>
+        let currentSize = 16;
+        function changeFontSize(delta) {
+            currentSize += delta * 2;
+            document.getElementById('content').style.fontSize = currentSize + 'px';
+        }
+    </script>
 </body>
 </html>
