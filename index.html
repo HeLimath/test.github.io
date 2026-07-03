@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <!-- user-scalable=no와 maximum-scale 설정을 제거하여 휴대폰의 글씨 크기 설정 및 사용자 화면 확대가 자유롭게 작동하도록 개선합니다. -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2026학년도 교사 연찬회</title>
+    <title>법동중 연찬회</title>
     
     <!-- 모바일 홈 화면 추가 시 나타날 아이콘 설정 -->
     <!-- 깃허브에 이 html 파일과 같은 위치에 'icon.png' 파일을 꼭 함께 올려주세요! -->
@@ -96,6 +96,29 @@
 
         #font-size-control {
             bottom: calc(5.15rem + env(safe-area-inset-bottom));
+            right: 0;
+            transform: translateX(calc(100% - 3.25rem));
+            transition: transform 0.28s ease;
+        }
+        #font-size-control.open { transform: translateX(0); }
+        #font-size-control .font-toggle {
+            width: 3.25rem;
+            min-height: 3.25rem;
+            border-radius: 1rem 0 0 1rem;
+            box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+        }
+        #font-size-control .font-panel {
+            width: 15.5rem;
+            border-radius: 1rem 0 0 1rem;
+            box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+        }
+        #font-size-control .font-toggle-icon {
+            transition: transform 0.28s ease;
+        }
+        #font-size-control.open .font-toggle-icon { transform: rotate(180deg); }
+        #font-size-control .font-toggle-label {
+            writing-mode: vertical-rl;
+            line-height: 1;
         }
 
         #font-size-range {
@@ -848,15 +871,23 @@
     </div>
 
 
-    <!-- 글씨 크기 조절 패널: 사용자가 앱 안에서 바로 확대/축소 가능 -->
-    <div id="font-size-control" class="fixed right-3 z-[90] bg-white/95 border border-seoul-line rounded-2xl shadow-lg backdrop-blur-md p-2 flex items-center gap-2">
-        <button type="button" onclick="changeFontScale(-0.05)" aria-label="글씨 작게" class="w-9 h-9 rounded-xl bg-gray-100 text-seoul-charcoal font-black text-sm active:scale-95 transition-transform">A-</button>
-        <div class="flex flex-col items-center justify-center gap-1">
-            <label for="font-size-range" class="text-[10px] font-bold text-gray-500 leading-none">글씨 크기</label>
-            <input id="font-size-range" type="range" min="90" max="140" step="5" value="100" oninput="setFontScalePercent(this.value)" class="w-24 h-5 cursor-pointer">
+    <!-- 글씨 크기 조절 패널: 오른쪽 탭을 누르면 아코디언처럼 펼쳐짐 -->
+    <div id="font-size-control" class="fixed z-[90] flex items-stretch">
+        <button type="button" id="font-size-toggle" onclick="toggleFontSizeControl()" aria-label="글씨 크기 조절 패널 열기" aria-expanded="false" class="font-toggle bg-seoul-red text-white border-y border-l border-seoul-red flex flex-col items-center justify-center gap-1 active:scale-95 transition-transform">
+            <i class="fa-solid fa-chevron-left font-toggle-icon text-[11px]"></i>
+            <span class="font-toggle-label text-[10px] font-black tracking-tight">글씨</span>
+            <span class="text-[13px] font-black leading-none">A</span>
+        </button>
+
+        <div class="font-panel bg-white/95 border border-seoul-line backdrop-blur-md p-2 flex items-center gap-2">
+            <button type="button" onclick="changeFontScale(-0.05)" aria-label="글씨 작게" class="w-9 h-9 rounded-xl bg-gray-100 text-seoul-charcoal font-black text-sm active:scale-95 transition-transform">A-</button>
+            <div class="flex flex-col items-center justify-center gap-1">
+                <label for="font-size-range" class="text-[10px] font-bold text-gray-500 leading-none">글씨 크기</label>
+                <input id="font-size-range" type="range" min="90" max="140" step="5" value="100" oninput="setFontScalePercent(this.value)" class="w-24 h-5 cursor-pointer">
+            </div>
+            <button type="button" onclick="changeFontScale(0.05)" aria-label="글씨 크게" class="w-9 h-9 rounded-xl bg-seoul-red text-white font-black text-sm active:scale-95 transition-transform">A+</button>
+            <button type="button" onclick="resetFontScale()" id="font-size-value" aria-label="글씨 크기 기본값으로" class="min-w-[48px] h-9 px-2 rounded-xl bg-[#FFF5F3] text-seoul-red font-black text-[12px] active:scale-95 transition-transform">100%</button>
         </div>
-        <button type="button" onclick="changeFontScale(0.05)" aria-label="글씨 크게" class="w-9 h-9 rounded-xl bg-seoul-red text-white font-black text-sm active:scale-95 transition-transform">A+</button>
-        <button type="button" onclick="resetFontScale()" id="font-size-value" aria-label="글씨 크기 기본값으로" class="min-w-[48px] h-9 px-2 rounded-xl bg-[#FFF5F3] text-seoul-red font-black text-[12px] active:scale-95 transition-transform">100%</button>
     </div>
 
     <!-- 하단에 딱 붙는 안정적인 네비게이션 탭 바 -->
@@ -1071,6 +1102,7 @@
 
         // 글씨 크기 조절: 즉시 반영 + 기기별 저장
         const FONT_SCALE_STORAGE_KEY = 'teacherWorkshopFontScale';
+        const FONT_PANEL_STORAGE_KEY = 'teacherWorkshopFontPanelOpen';
         const MIN_FONT_SCALE = 0.9;
         const MAX_FONT_SCALE = 1.4;
 
@@ -1106,7 +1138,27 @@
             applyFontScale(1);
         };
 
+        function applyFontSizeControlOpen(isOpen) {
+            const control = document.getElementById('font-size-control');
+            const toggle = document.getElementById('font-size-toggle');
+            if (!control) return;
+
+            control.classList.toggle('open', Boolean(isOpen));
+            localStorage.setItem(FONT_PANEL_STORAGE_KEY, Boolean(isOpen) ? 'true' : 'false');
+
+            if (toggle) {
+                toggle.setAttribute('aria-expanded', Boolean(isOpen) ? 'true' : 'false');
+                toggle.setAttribute('aria-label', Boolean(isOpen) ? '글씨 크기 조절 패널 접기' : '글씨 크기 조절 패널 열기');
+            }
+        }
+
+        window.toggleFontSizeControl = function() {
+            const control = document.getElementById('font-size-control');
+            applyFontSizeControlOpen(!(control && control.classList.contains('open')));
+        };
+
         applyFontScale(localStorage.getItem(FONT_SCALE_STORAGE_KEY) || 1);
+        applyFontSizeControlOpen(localStorage.getItem(FONT_PANEL_STORAGE_KEY) === 'true');
     </script>
 
     <!-- 클라우드 데이터 실시간 동기화 스크립트 -->
@@ -1157,6 +1209,28 @@
                     if (data.isActive) {
                         const noticeModal = document.getElementById('notice-modal');
                         document.getElementById('notice-text').innerText = data.message;
+                        
+                        // --- 새로운 알람 및 중복 방지 로직 ---
+                        const lastNotice = localStorage.getItem('lastNoticeMessage');
+                        
+                        // 이전에 울렸던 공지와 내용이 다를 때만 알람 실행
+                        if (lastNotice !== data.message) {
+                            // 1. 진동 울리기 (안드로이드 등 지원 기기에서 작동: 징-징-지잉 패턴)
+                            if (navigator.vibrate) {
+                                navigator.vibrate([200, 100, 200, 100, 500]); 
+                            }
+                            
+                            // 2. 팝업 소리 재생 (띠링~)
+                            try {
+                                const alertSound = new Audio('https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3');
+                                alertSound.play().catch(e => console.log("기기 정책에 의해 소리 자동재생이 차단됨:", e));
+                            } catch (e) {}
+                            
+                            // 현재 띄운 공지를 저장해서 다음 번에 앱을 새로고침해도 똑같은 건 안 울리게 함
+                            localStorage.setItem('lastNoticeMessage', data.message);
+                        }
+                        // ------------------------------------
+
                         noticeModal.classList.remove('hidden');
                         setTimeout(() => {
                             noticeModal.classList.remove('opacity-0');
